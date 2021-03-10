@@ -15,18 +15,18 @@
 
 			<!-- DB User -->
 			<property name="javax.persistence.jdbc.user"
-				value="topicos2" />
+				value="postgres" />
 
 			<!-- DB Password -->
 			<property name="javax.persistence.jdbc.password"
-				value="123456" />
+				value="Gabs2" />
 
 			<!-- DB Dialect -->
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.PostgreSQLDialect" />
 
 			<!-- create / create-drop / update -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 
 			<!-- Show SQL in console -->
 			<property name="hibernate.show_sql" value="true" />

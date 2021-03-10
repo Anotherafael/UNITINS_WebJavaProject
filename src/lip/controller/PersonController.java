@@ -7,6 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import lip.model.Person;
+import lip.util.DefaultEntityManager;
+import lip.util.Util;
 
 @Named
 @RequestScoped
@@ -14,9 +16,6 @@ public class PersonController {
 
 	private Person person = null;
 
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("lip");
-	EntityManager em = emf.createEntityManager();
-	
 	public Person getPerson() {
 		if (person == null)
 			person = new Person();
@@ -28,9 +27,11 @@ public class PersonController {
 	}
 	
 	public void save() {
+		EntityManager em = DefaultEntityManager.getEntityManager();
 		em.getTransaction().begin();
 		em.persist(getPerson());
 		em.getTransaction().commit();
+		Util.addInfoMessage("User added");
 		System.out.println("Saved on Database");
 		clean();
 	}

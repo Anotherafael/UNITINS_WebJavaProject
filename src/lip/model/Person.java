@@ -4,13 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import lip.util.DefaultEntity;
+import lip.util.Util;
 
 @Entity
 public class Person extends DefaultEntity{
 
+	@Column(length = 100)
 	private String name;
 	
-	@Column(unique=true)
+	@Column(unique=true, length = 14)
 	private String cpf;
 	
 	public Person () {

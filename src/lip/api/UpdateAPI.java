@@ -16,7 +16,7 @@ public class UpdateAPI {
 
 			Person person = new Person();
 			
-			person = em.find(Person.class, 8);
+			person = em.find(Person.class, 1);
 			person.setName("Rafael");
 			
 			em.getTransaction().begin();
