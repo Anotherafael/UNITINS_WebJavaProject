@@ -1,19 +1,20 @@
 package lip.controller;
 
-import javax.enterprise.context.RequestScoped;
+import java.io.Serializable;
+
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import lip.model.Person;
 import lip.util.DefaultEntityManager;
 import lip.util.Util;
 
 @Named
-@RequestScoped
-public class PersonController {
+@ViewScoped
+public class PersonController implements Serializable{
 
+	private static final long serialVersionUID = 1598383566831207263L;
 	private Person person = null;
 
 	public Person getPerson() {

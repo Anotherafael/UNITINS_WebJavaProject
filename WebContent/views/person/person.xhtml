@@ -1,0 +1,46 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/admin_template.xhtml">
+
+	<ui:define name="container">
+		<main>
+			<h2 class="dash-title">Painel de Usuários</h2>
+			<div class="dash-cards">
+				<div class="card-single">
+					<h:form>
+						<p:growl id="growl" showDetail="true" />
+						<div class="card-body">
+							<div class="form-container">
+								<div class="user-details">
+									<div class="input-box">
+										<span class="details">Name</span>
+										<p:inputText type="text" placeholder="Enter your name"
+											value="#{personController.person.name}" />
+									</div>
+									<div class="input-box">
+										<span class="details">CPF</span>
+										<p:inputMask type="text" id="cpf" value="#{personController.person.cpf}" mask="999.999.999-99" validateMask="true" placeholder="Enter your cpf">
+											<f:validateLength minimum="14"/>
+										</p:inputMask>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="card-footer">
+							<p:commandButton styleClass="rounded-button" value="Submit" 
+								actionListener="#{personController.save}"
+								process="@form" 
+								update="@form" />
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</main>
+
+	</ui:define>
+</ui:composition>
