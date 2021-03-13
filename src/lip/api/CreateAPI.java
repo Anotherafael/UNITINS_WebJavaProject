@@ -5,6 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import lip.model.Person;
+import lip.model.User;
+import lip.util.Util;
 
 public class CreateAPI {
 
@@ -14,17 +16,22 @@ public class CreateAPI {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("lip");
 			EntityManager em = emf.createEntityManager();
 
+			User user = new User();
 			Person person = new Person();
-			person.setCpf("001");
-			person.setName("Gabriela");
+			person.setName("Rafael");
+			person.setCpf("123");
+			user.setPerson(person);
+			user.setEmail("rafael@gmail.com");
+			user.setNickname("anotherafael");
+			user.setPassword(Util.hash("123"));
 			
 			em.getTransaction().begin();
-			// Persist é utilizado para realizar um Create
-			em.persist(person);
+			em.persist(user);
 			em.getTransaction().commit();
 			
 			System.out.println("Ready!");			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Not ready!");
 		}
 	}

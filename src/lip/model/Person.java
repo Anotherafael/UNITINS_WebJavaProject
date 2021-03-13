@@ -2,14 +2,15 @@ package lip.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import lip.util.DefaultEntity;
-import lip.util.Util;
 
 @Entity
-public class Person extends DefaultEntity{
+@Table(name = "\"person\"")
+public class Person extends DefaultEntity<Person>{
 
-	@Column(length = 100)
+	@Column(length = 60)
 	private String name;
 	
 	@Column(unique=true, length = 14)

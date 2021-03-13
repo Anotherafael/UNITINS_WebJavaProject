@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import lip.model.Person;
+import lip.model.User;
 
 public class UpdateAPI {
 
@@ -14,18 +14,19 @@ public class UpdateAPI {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("lip");
 			EntityManager em = emf.createEntityManager();
 
-			Person person = new Person();
-			
-			person = em.find(Person.class, 1);
-			person.setName("Rafael");
+			User user = new User();
+			user = em.find(User.class, 1);
+			user.setEmail("rafaelafm@gmail.com");
+			user.getPerson().setName("Rafael Freitas");
 			
 			em.getTransaction().begin();
 			// Merge é utilizado tanto para Create quanto Update.
-			person = em.merge(person);
+			user = em.merge(user);
 			em.getTransaction().commit();
 			
 			System.out.println("Ready!");			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("Not ready!");
 		}
 	}

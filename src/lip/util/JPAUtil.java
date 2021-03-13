@@ -4,11 +4,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class DefaultEntityManager {
+public class JPAUtil {
 
 	private static EntityManagerFactory emf = null;
 
-	private DefaultEntityManager() {
+	private JPAUtil() {
 		// nao permitir a instancia
 	}
 
