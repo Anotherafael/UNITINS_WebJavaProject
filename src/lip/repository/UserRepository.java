@@ -32,4 +32,21 @@ public class UserRepository extends Repository<User> {
 		}
 
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> findByName(String search) throws RepositoryException {
+		
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query = em.createQuery("SELECT u FROM User u ORDER BY u.id LIKE search");
+			
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Database consult error");
+		}
+		
+	}
+	
+	
 }

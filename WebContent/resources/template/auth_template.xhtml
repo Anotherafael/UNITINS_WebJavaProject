@@ -16,21 +16,16 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.quicksearch/2.3.1/jquery.quicksearch.js"></script>
     </f:facet>
-	<title>Dashboard Admin</title>
-	<h:outputStylesheet library="css" name="template.css"/>
-	<h:outputScript library="js" name="jquery.quicksearch.js"/>
+	<title>Login</title>
+	<h:outputStylesheet library="css" name="auth.css"/>
 </h:head>
 <h:body>
+	<section class="side">
+		<p:graphicImage library="imgs" name="img.svg"/>
+    </section>
 
-
-	<ui:include src="sidebar.xhtml"></ui:include>
-	<section class="main-content">
-		<ui:include src="nav.xhtml"></ui:include>	
-		<ui:insert name="content"></ui:insert>
-	</section>
-	
-	<footer class="footer">
-		<ui:insert name="footer"></ui:insert>
-	</footer>	
+    <section class="main">
+        <ui:insert name="content"></ui:insert>
+    </section>
 </h:body>
 </html>

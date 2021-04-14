@@ -1,12 +1,12 @@
-package lip.api;
+package lip.test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import lip.model.User;
+import lip.model.Music;
 
-public class UpdateAPI {
+public class CreateAPI {
 
 	public static void main(String[] args) {
 		
@@ -14,14 +14,12 @@ public class UpdateAPI {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("lip");
 			EntityManager em = emf.createEntityManager();
 
-			User user = new User();
-			user = em.find(User.class, 1);
-			user.setEmail("rafaelafm@gmail.com");
-			user.getPerson().setName("Rafael Freitas");
+			Music music = new Music();
+			music.setTitle("Desenho");
+			music.setLyrics("Letra insana de bom, meu bom.");
 			
 			em.getTransaction().begin();
-			// Merge é utilizado tanto para Create quanto Update.
-			user = em.merge(user);
+			em.persist(music);
 			em.getTransaction().commit();
 			
 			System.out.println("Ready!");			
@@ -30,5 +28,4 @@ public class UpdateAPI {
 			System.out.println("Not ready!");
 		}
 	}
-
 }

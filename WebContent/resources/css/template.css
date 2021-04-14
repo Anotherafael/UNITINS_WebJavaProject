@@ -169,3 +169,11 @@ form .details .input-box {
 .details .input-box input:valid{
 	border-color: var(--color-dark);
 }
+
+.data-table {
+	margin: 20px 0 12px 0; 
+}
+
+body .ui-button.ui-button-text-icon-right .ui-button-text {
+	padding: 0.5rem 1rem 0.5rem 1rem;
+}

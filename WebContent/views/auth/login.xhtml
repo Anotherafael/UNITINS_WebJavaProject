@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/auth_template.xhtml">
+
+	<ui:define name="content">
+		<div class="login-container">
+            <p class="title">Bem-vindo!</p>
+            <div class="separator"></div>
+            <p class="welcome-message">Por favor, digite suas credenciais para ter acesso a todos os nossos serviços</p>
+
+			<p:growl id="growl" showDetail="true" />
+            <h:form class="login-form">
+                <div class="form-control">
+                    <span class="ui-input-icon-left">
+				        <i class="ti-user" />
+				        <p:inputText placeholder="Email" value="#{loginController.email}" required="true"/>
+				    </span>
+                </div>
+                <div class="form-control">
+                    <span class="ui-input-icon-left">
+				        <i class="ti-lock" />
+				        <p:password placeholder="Password" value="#{loginController.password}"></p:password>
+				    </span>
+                </div>
+                <p:commandButton styleClass="rounded-button submit" value="Login" actionListener="#{loginController.singIn}" ></p:commandButton>
+                <p:commandButton styleClass="ui-button-flat reset" value="Resetar Senha" ></p:commandButton>
+            </h:form>
+        </div>
+	</ui:define>
+</ui:composition>

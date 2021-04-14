@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/admin_template.xhtml">
+
+	<ui:define name="content">
+		<main>
+			<div class="container">
+				<div class="title">Posts
+					<p:linkButton outcome="index" styleClass="rounded-button ui-button-warning" value="Voltar" style="float:right;"></p:linkButton>
+				</div>
+				<h:form>
+					<p:growl id="growl" showDetail="true" />
+					<div class="details">
+						<div class="input-box">
+							<p:outputLabel styleClass="input-details" value="Title"/>
+	       					<p:inputText type="text" placeholder="Qual o título?" value="#{postController.entity.title}" />
+						</div>
+						<div class="input-box">
+							<p:outputLabel styleClass="input-details" value="Lyrics"/>
+	       					<p:inputText type="text" placeholder="Qual o conteúdo?" value="#{postController.entity.content}" />
+						</div>		
+					</div>
+					<p:commandButton style="float:right;" styleClass="rounded-button" value="Submit"
+						actionListener="#{postController.save}" 
+						process="@form"
+						update="@form" />
+				</h:form>
+			</div>
+		</main>
+	</ui:define>
+
+</ui:composition>

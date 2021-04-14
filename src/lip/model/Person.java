@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import lip.util.DefaultEntity;
 
 @Entity
-@Table(name = "\"person\"")
+@Table(name = "\"persons\"")
 public class Person extends DefaultEntity<Person>{
 
 	@Column(length = 60)
