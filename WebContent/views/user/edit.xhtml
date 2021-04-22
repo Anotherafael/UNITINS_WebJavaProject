@@ -12,11 +12,14 @@
 			<div class="container">
 				<div class="title">
 					Registration
-					<p:commandButton action="#{userController.returnToIndex}" styleClass="rounded-button ui-button-warning" style="float:right;" value="Voltar"></p:commandButton>
+					<p:commandButton action="#{userController.returnToIndex}"
+						styleClass="rounded-button ui-button-warning" style="float:right;"
+						value="Voltar"></p:commandButton>
 				</div>
 				<h:form>
 					<p:growl id="growl" showDetail="true" />
 					<p:wizard backLabel="Return" nextLabel="Next" styleClass="wizard">
+
 						<p:tab id="tabDadosPrincipais" title="Dados Principais">
 							<div class="details">
 								<div class="input-box">
@@ -46,6 +49,7 @@
 								</div>
 							</div>
 						</p:tab>
+
 						<p:tab id="tabContacts" title="Contatos">
 							<div class="details">
 								<div class="input-box">
@@ -56,31 +60,31 @@
 								</div>
 								<p:commandButton value="Adicionar"
 									actionListener="#{userController.addContact}"
-									process="@this itNumber" update="itNumber dtPhone" />
+									process="@this" update="itNumber dtPhone" />
 							</div>
-							
+
 							<p:dataTable id="dtPhone"
 								value="#{userController.entity.listContacts}" var="obj">
-								
+
 								<p:column>
 									<f:facet name="header">Number</f:facet>
 									<p:outputLabel value="#{obj}" />
 								</p:column>
+								
 								<p:column>
-								
-					    		<f:facet name="header">Ação</f:facet>
-					    		<p:commandButton value="Remover" 
-					    			actionListener="#{userController.removeContact(obj)}" 
-					    			process="@this"
-					    			update="itNumber dtPhone"/>
-					    	</p:column>
-								
+									<f:facet name="header">Ação</f:facet>
+									<p:commandButton value="Remover"
+										actionListener="#{userController.removeContact(obj)}"
+										process="@this" update="@form" />
+								</p:column>
+
 							</p:dataTable>
-							
+
 							<p:commandButton style="float:right;" styleClass="rounded-button"
 								value="Submit" actionListener="#{userController.save}"
 								process="@form" update="@form" />
 						</p:tab>
+
 					</p:wizard>
 				</h:form>
 			</div>

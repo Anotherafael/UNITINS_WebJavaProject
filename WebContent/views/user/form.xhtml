@@ -28,20 +28,22 @@
 								</div>
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Nickname" />
-									<p:inputText id="itNickname" type="text" placeholder="Qual o nome fantasia?"
+									<p:inputText id="itNickname" type="text"
+										placeholder="Qual o nome fantasia?"
 										value="#{userController.entity.nickname}" />
 								</div>
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="CPF   " />
-									<p:inputMask id="itCpf" type="text" value="#{userController.entity.cpf}"
-										mask="999.999.999-99" validateMask="true"
-										placeholder="Qual o CPF?">
+									<p:inputMask id="itCpf" type="text"
+										value="#{userController.entity.cpf}" mask="999.999.999-99"
+										validateMask="true" placeholder="Qual o CPF?">
 										<f:validateLength minimum="14" />
 									</p:inputMask>
 								</div>
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Email" />
-									<p:inputText id="itEmail" type="text" placeholder="Qual o email?"
+									<p:inputText id="itEmail" type="text"
+										placeholder="Qual o email?"
 										value="#{userController.entity.email}" />
 								</div>
 								<div class="input-box">
@@ -59,36 +61,40 @@
 							</div>
 						</p:tab>
 						<p:tab id="tabContacts" title="Contatos">
+						
 							<div class="details">
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Phone" />
-									<p:inputText id="itNumber" type="text" placeholder="Qual o telefone?"
+									<p:inputText id="itNumber" type="text"
+										placeholder="Qual o telefone?"
 										value="#{userController.phone.number}" />
 								</div>
 								<p:commandButton value="Adicionar"
 									actionListener="#{userController.addContact}"
 									process="@this itNumber" update="itNumber" />
 							</div>
-								<p:dataTable id="dtPhone"
+							
+							<p:dataTable id="dtPhone"
 								value="#{userController.entity.listContacts}" var="obj">
-								
+
 								<p:column>
 									<f:facet name="header">Number</f:facet>
 									<p:outputLabel value="#{obj}" />
 								</p:column>
 								<p:column>
-								
-					    		<f:facet name="header">Ação</f:facet>
-					    		<p:commandButton value="Remover" 
-					    			actionListener="#{userController.removeContact(obj)}" 
-					    			process="@this"
-					    			update="dtPhone"/>
-					    	</p:column>
-								
+
+									<f:facet name="header">Ação</f:facet>
+									<p:commandButton value="Remover"
+										actionListener="#{userController.removeContact(obj)}"
+										process="@this" update="dtPhone" />
+								</p:column>
+
 							</p:dataTable>
+							
 							<p:commandButton style="float:right;" styleClass="rounded-button"
 								value="Submit" actionListener="#{userController.save}"
 								process="@form" update="@form" />
+								
 						</p:tab>
 					</p:wizard>
 				</h:form>
