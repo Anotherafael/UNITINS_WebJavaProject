@@ -1,5 +1,7 @@
 package lip.controller;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,6 +92,12 @@ public class UserController extends Controller<User> {
 	@Override
 	public void remove(User user) {
 		super.remove(user);
+	}
+	
+	public String returnToIndex () {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.clear();
+		return "index.xhtml?faces-redirect=true";
 	}
 	
 	@Override
