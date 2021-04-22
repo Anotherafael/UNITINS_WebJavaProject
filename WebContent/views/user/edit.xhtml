@@ -60,7 +60,7 @@
 								</div>
 								<p:commandButton value="Adicionar"
 									actionListener="#{userController.addContact}"
-									process="@this" update="itNumber dtPhone" />
+									process="@this itNumber" update="itNumber dtPhone" />
 							</div>
 
 							<p:dataTable id="dtPhone"
@@ -75,7 +75,7 @@
 									<f:facet name="header">Ação</f:facet>
 									<p:commandButton value="Remover"
 										actionListener="#{userController.removeContact(obj)}"
-										process="@this" update="@form" />
+										process="@this" update="dtPhone" />
 								</p:column>
 
 							</p:dataTable>

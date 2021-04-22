@@ -17,10 +17,10 @@
 							value="Adicionar Novo" style="float:right;"></p:linkButton>
 					</div>
 					<div class="data-table">
-						<p:dataTable rows="10" paginator="true"
+						<p:dataTable id="dtUser" rows="10" paginator="true"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-							rowsPerPageTemplate="5,10,15" id="dtUsers"
+							rowsPerPageTemplate="5,10,15"
 							emptyMessage="No users found" value="#{userController.userList}"
 							var="obj">
 
@@ -40,16 +40,16 @@
 								<p:outputLabel id="itEmail" value="#{obj.email}" />
 							</p:column>
 
-							<p:column>
+							<p:column headerText="Edit">
 								<p:commandButton value="Edit"
 									actionListener="#{userController.edit(obj)}" process="@form"
 									update="@form"></p:commandButton>
 							</p:column>
 
-							<p:column>
+							<p:column headerText="Remove">
 								<p:commandButton value="Remove"
-									actionListener="#{userController.remove(obj)}" process="@this itName itNickname itCpf itEmail"
-									update="@this"></p:commandButton>
+									actionListener="#{userController.remove(obj)}" process="@this"
+									update="dtUser"/>
 							</p:column>
 
 						</p:dataTable>
