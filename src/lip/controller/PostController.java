@@ -10,6 +10,7 @@ import javax.inject.Named;
 import org.primefaces.util.LangUtils;
 
 import lip.model.Post;
+import lip.model.PostType;
 import lip.repository.PostRepository;
 import lip.repository.RepositoryException;
 import lip.util.Util;
@@ -36,6 +37,10 @@ public class PostController extends Controller<Post> {
 			}
 		}
 		return postList;
+	}
+	
+	public PostType[] getPostTypeList() {
+		return PostType.values();
 	}
 	
 	public List<Post> getPostListFiltered() {

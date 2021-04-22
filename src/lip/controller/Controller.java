@@ -34,11 +34,11 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 		clean();
 	}
 
-	public void remove() {
+	public void remove(T entity) {
 		Repository<T> repo = new Repository<T>();
 		try {
 			repo.beginTransaction();
-			repo.remove(getEntity());
+			repo.remove(entity);
 			Util.addInfoMessage("Deleted with success");
 			repo.commitTransaction();
 		} catch (RepositoryException e) {
@@ -50,9 +50,8 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 		clean();
 	}
 	
-	public String edit(T entity) {
+	public void edit(T entity) {
 		setEntity(entity);
-		return null;
 	}
 	
 	public void clean() {

@@ -23,18 +23,16 @@
 							value="#{postController.postList}"
 							filteredValue="#{postController.postListFiltered}" var="obj">
 							
-							<f:facet name="header">
-				                <div class="p-d-flex p-ai-center p-jc-between">
-				                    <p:inputText id="globalFilter" onkeyup="PF('postTable').filter()" style="width:10rem" placeholder="Enter a name" />
-				                </div>
-				            </f:facet>
-							
 							<p:column headerText="ID">
 								<p:outputLabel value="#{obj.id}" />
 							</p:column>
 							
 							<p:column headerText="Title" >
 								<p:outputLabel value="#{obj.title}" />
+							</p:column>
+							
+							<p:column headerText="Type" >
+								<p:outputLabel value="#{obj.postType.label}" />
 							</p:column>
 							
 							<p:column headerText="Lyrics">

@@ -1,20 +1,15 @@
 package lip.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
-import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
-import org.hibernate.criterion.MatchMode;
-import org.primefaces.model.FilterMeta;
-import org.primefaces.util.LangUtils;
-
-import lip.model.Person;
+import lip.model.Contact;
+import lip.model.Phone;
 import lip.model.User;
 import lip.repository.RepositoryException;
 import lip.repository.UserRepository;
@@ -27,8 +22,39 @@ public class UserController extends Controller<User> {
 	static final long serialVersionUID = -7139140939538307737L;
 
 	private List<User> userList;
-	private List<User> userListFiltered;
+	private Phone phone;
+
+	public UserController() {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.keep("flashUser");
+		entity = (User) flash.get("flashUser");
+	}
+
+	public Phone getPhone() {
+		if (phone == null) {
+			phone = new Phone();
+		}
+		return phone;
+	}
+
+	public void setPhone(Phone phone) {
+		this.phone = phone;
+	}
 	
+	public void addContact() {
+		if (getEntity().getListContacts() == null)
+			getEntity().setListContacts(new ArrayList<Contact>());
+
+		getPhone().setUser(getEntity());
+		getEntity().getListContacts().add(getPhone());
+
+		phone = null;
+	}
+	
+	public void removeContact(Contact contact) {
+		getEntity().getListContacts().remove(contact);
+	}
+
 	public List<User> getUserList() {
 		if (userList == null) {
 			userList = new ArrayList<User>();
@@ -44,24 +70,6 @@ public class UserController extends Controller<User> {
 		return userList;
 	}
 	
-	public List<User> getUserListFiltered() {
-		return userListFiltered;
-	}
-	
-	public void setUserListFiltered(List<User> userListFiltered) {
-		this.userListFiltered = userListFiltered;
-	}
-
-	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
-        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-        if (LangUtils.isValueBlank(filterText)) {
-            return true;
-        }
-
-        User user = (User) value;
-        return user.getPerson().getName().toLowerCase().contains(filterText);
-    }
-	
 	public void setUserList(List<User> listaUsuario) {
 		this.userList = listaUsuario;
 	}
@@ -70,7 +78,6 @@ public class UserController extends Controller<User> {
 	public User getEntity() {
 		if (entity == null ) {
 			entity = new User();
-			entity.setPerson(new Person());
 		}
 		return entity;
 	}
@@ -78,6 +85,18 @@ public class UserController extends Controller<User> {
 	@Override
 	public void save() {
 		super.save();
+	}
+	
+	@Override
+	public void remove(User user) {
+		super.remove(user);
+	}
+	
+	@Override
+	public void edit(User entity) {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("flashUser", entity);
+		Util.redirect("/lip/views/user/edit.xhtml");
 	}
 
 }

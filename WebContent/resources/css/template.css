@@ -137,6 +137,14 @@ main {
 	background: linear-gradient(135deg, #71b7e3, #9b59b6);
 }
 
+.container form {
+	margin: 2rem 1rem 1rem 1rem;
+}
+
+body .ui-button.ui-button-text-icon-right .ui-icon {
+	display: none;
+}
+
 .container form .details {
 	display: flex;
 	flex-wrap: wrap;

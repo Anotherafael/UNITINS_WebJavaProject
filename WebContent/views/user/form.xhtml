@@ -1,0 +1,99 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/admin_template.xhtml">
+
+	<ui:define name="content">
+
+		<main>
+			<div class="container">
+				<div class="title">
+					Registration
+					<p:linkButton outcome="index"
+						styleClass="rounded-button ui-button-warning" value="Voltar"
+						style="float:right;"></p:linkButton>
+				</div>
+				<h:form>
+					<p:growl id="growl" showDetail="true" />
+					<p:wizard backLabel="Return" nextLabel="Next" styleClass="wizard">
+						<p:tab id="tabDadosPrincipais" title="Dados Principais">
+							<div class="details">
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Name" />
+									<p:inputText id="itName" type="text" placeholder="Qual o nome?"
+										value="#{userController.entity.name}" />
+								</div>
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Nickname" />
+									<p:inputText id="itNickname" type="text" placeholder="Qual o nome fantasia?"
+										value="#{userController.entity.nickname}" />
+								</div>
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="CPF   " />
+									<p:inputMask id="itCpf" type="text" value="#{userController.entity.cpf}"
+										mask="999.999.999-99" validateMask="true"
+										placeholder="Qual o CPF?">
+										<f:validateLength minimum="14" />
+									</p:inputMask>
+								</div>
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Email" />
+									<p:inputText id="itEmail" type="text" placeholder="Qual o email?"
+										value="#{userController.entity.email}" />
+								</div>
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Password" />
+									<p:password id="pwd1" match="pwd2" feedback="true"
+										label="Senha" required="true" placeholder="Digite a senha" />
+								</div>
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details"
+										value="Confirm Password" />
+									<p:password id="pwd2" value="#{userController.entity.password}"
+										match="pwd2" label="Confirmação de Senha" required="true"
+										placeholder="Repita a senha" />
+								</div>
+							</div>
+						</p:tab>
+						<p:tab id="tabContacts" title="Contatos">
+							<div class="details">
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Phone" />
+									<p:inputText id="itNumber" type="text" placeholder="Qual o telefone?"
+										value="#{userController.phone.number}" />
+								</div>
+								<p:commandButton value="Adicionar"
+									actionListener="#{userController.addContact}"
+									process="@this itNumber" update="itNumber" />
+							</div>
+								<p:dataTable id="dtPhone"
+								value="#{userController.entity.listContacts}" var="obj">
+								
+								<p:column>
+									<f:facet name="header">Number</f:facet>
+									<p:outputLabel value="#{obj}" />
+								</p:column>
+								<p:column>
+								
+					    		<f:facet name="header">Ação</f:facet>
+					    		<p:commandButton value="Remover" 
+					    			actionListener="#{userController.removeContact(obj)}" 
+					    			process="@this"
+					    			update="dtPhone"/>
+					    	</p:column>
+								
+							</p:dataTable>
+							<p:commandButton style="float:right;" styleClass="rounded-button"
+								value="Submit" actionListener="#{userController.save}"
+								process="@form" update="@form" />
+						</p:tab>
+					</p:wizard>
+				</h:form>
+			</div>
+		</main>
+	</ui:define>
+
+</ui:composition>

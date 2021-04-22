@@ -14,6 +14,8 @@ public class Post extends DefaultEntity<Post>{
 	private String title;
 	@Column(nullable = false, length = 500)
 	private String content;
+	@Column(nullable = false)
+	private PostType postType;
 	
 	public Post() {
 		super();
@@ -37,12 +39,19 @@ public class Post extends DefaultEntity<Post>{
 	public void setContent(String content) {
 		this.content = content;
 	}
+	public PostType getPostType() {
+		return postType;
+	}
+	public void setPostType(PostType postType) {
+		this.postType = postType;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((content == null) ? 0 : content.hashCode());
+		result = prime * result + ((postType == null) ? 0 : postType.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -60,6 +69,8 @@ public class Post extends DefaultEntity<Post>{
 			if (other.content != null)
 				return false;
 		} else if (!content.equals(other.content))
+			return false;
+		if (postType != other.postType)
 			return false;
 		if (title == null) {
 			if (other.title != null)

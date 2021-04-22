@@ -9,25 +9,36 @@
 	<ui:define name="content">
 		<main>
 			<div class="container">
-				<div class="title">Posts
-					<p:linkButton outcome="index" styleClass="rounded-button ui-button-warning" value="Voltar" style="float:right;"></p:linkButton>
+				<div class="title">
+					Posts
+					<p:linkButton outcome="index"
+						styleClass="rounded-button ui-button-warning" value="Voltar"
+						style="float:right;"></p:linkButton>
 				</div>
 				<h:form>
 					<p:growl id="growl" showDetail="true" />
 					<div class="details">
 						<div class="input-box">
-							<p:outputLabel styleClass="input-details" value="Title"/>
-	       					<p:inputText type="text" placeholder="Qual o título?" value="#{postController.entity.title}" />
+							<p:outputLabel styleClass="input-details" value="Title" />
+							<p:inputText type="text" placeholder="Qual o título?"
+								value="#{postController.entity.title}" />
 						</div>
 						<div class="input-box">
-							<p:outputLabel styleClass="input-details" value="Lyrics"/>
-	       					<p:inputText type="text" placeholder="Qual o conteúdo?" value="#{postController.entity.content}" />
-						</div>		
+							<p:outputLabel styleClass="input-details" value="Content" />
+							<p:inputText type="text" placeholder="Qual o conteúdo?"
+								value="#{postController.entity.content}" />
+						</div>
+						<div class="input-box">
+							<p:selectOneMenu value="#{postController.entity.postType}">
+								<f:selectItem itemLabel="Selecione o tipo de conteúdo..." itemDisabled="true"/>
+								<f:selectItems value="#{postController.postTypeList}" var="obj"
+									itemValue="#{obj}" itemLabel="#{obj.label}" />
+							</p:selectOneMenu>
+						</div>
 					</div>
-					<p:commandButton style="float:right;" styleClass="rounded-button" value="Submit"
-						actionListener="#{postController.save}" 
-						process="@form"
-						update="@form" />
+					<p:commandButton style="float:right;" styleClass="rounded-button"
+						value="Submit" actionListener="#{postController.save}"
+						process="@form" update="@form" />
 				</h:form>
 			</div>
 		</main>

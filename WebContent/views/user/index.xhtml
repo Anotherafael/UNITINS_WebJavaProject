@@ -1,0 +1,61 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/admin_template.xhtml">
+
+	<ui:define name="content">
+		<main>
+			<div class="container">
+				<h:form>
+					<div class="title">
+						Users
+						<p:linkButton outcome="form"
+							styleClass="rounded-button ui-button-warning"
+							value="Adicionar Novo" style="float:right;"></p:linkButton>
+					</div>
+					<div class="data-table">
+						<p:dataTable rows="10" paginator="true"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+							rowsPerPageTemplate="5,10,15" id="dtUsers"
+							emptyMessage="No users found" value="#{userController.userList}"
+							var="obj">
+
+							<p:column headerText="Name">
+								<p:outputLabel id="itName" value="#{obj.name}" />
+							</p:column>
+
+							<p:column headerText="Nickname">
+								<p:outputLabel id="itNickname" value="#{obj.nickname}" />
+							</p:column>
+
+							<p:column headerText="CPF">
+								<p:outputLabel id="itCpf" value="#{obj.cpf}" />
+							</p:column>
+
+							<p:column headerText="Email">
+								<p:outputLabel id="itEmail" value="#{obj.email}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Edit"
+									actionListener="#{userController.edit(obj)}" process="@form"
+									update="@form"></p:commandButton>
+							</p:column>
+
+							<p:column>
+								<p:commandButton value="Remove"
+									actionListener="#{userController.remove(obj)}" process="@this itName itNickname itCpf itEmail"
+									update="@this itName itNickname itCpf itEmail dtUsers"></p:commandButton>
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
+		</main>
+	</ui:define>
+</ui:composition>

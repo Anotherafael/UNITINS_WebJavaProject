@@ -17,7 +17,7 @@ public class UpdateAPI {
 			User user = new User();
 			user = em.find(User.class, 1);
 			user.setEmail("rafaelafm@gmail.com");
-			user.getPerson().setName("Rafael Freitas");
+			user.setName("Rafael Freitas");
 			
 			em.getTransaction().begin();
 			// Merge é utilizado tanto para Create quanto Update.

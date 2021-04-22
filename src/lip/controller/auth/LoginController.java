@@ -2,15 +2,16 @@ package lip.controller.auth;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
-import lip.model.Person;
 import lip.model.User;
-import lip.repository.RepositoryException;
 import lip.util.JPAUtil;
+import lip.util.Session;
 import lip.util.Util;
 
 @Named
@@ -18,60 +19,39 @@ import lip.util.Util;
 public class LoginController implements Serializable {
 
 	private static final long serialVersionUID = -7554946551552979100L;
-	
+
+	private User user;
 	private String email;
 	private String password;
-	
-	public User findUser(String email, String password) throws RepositoryException{ 
-		
-		try {
-			EntityManager em = JPAUtil.getEntityManager();
-			
-			StringBuffer jpql = new StringBuffer();
-			jpql.append("SELECT ");
-			jpql.append("  u ");
-			jpql.append("FROM ");
-			jpql.append("  User u ");
-			jpql.append("WHERE ");
-			jpql.append("  u.email = :email ");
-			jpql.append("  AND u.password = :password ");
-			
-			Query query = em.createQuery(jpql.toString());
-			query.setParameter("email", email);
-			query.setParameter("password", password);
-			
-			return (User) query.getSingleResult();
-			
-		} catch (Exception e) {
-			Util.addErrorMessage("User not found");
-			clean();
-			return null;
-		}
-		
-	}
-	
+
 	public void singIn() {
+		EntityManager em = JPAUtil.getEntityManager();
+		TypedQuery<User> query = em.createQuery("from User u where u.email = :email and u.password = :password",
+				User.class);
+		
+		String email = getEmail();
+		String password = getPassword();
+		query.setParameter("email", email);
+		//Converte o password para Hash, assim podemos fazer a busca no Banco de Dados.
+		query.setParameter("password", Util.hash(password));
+		
 		try {
-			User usuarioLogado = findUser(getEmail(), getPassword());
-			
-			if (usuarioLogado != null) {
-				//Session.getInstance().setAttribute("usuarioLogado", usuarioLogado);
-				Util.redirect("/lip/views/person/person.xhtml");
-			} else {
-				Util.redirect("/lip/views/person/login.xhtml");
-			}
-				
-		} catch (Exception e) {
-			e.printStackTrace();
-			Util.addErrorMessage("Error on login.");
+			setUser(query.getSingleResult());
+			Session.getInstance().setAttribute("loggedInUser", user);
+			Util.redirect("/lip/views/user/index.xhtml");
+		} catch (javax.persistence.NoResultException e) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "User not found", null));
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			Util.redirect("/lip/views/auth/login.xhtml");
 		}
 	}
-	
-	public void clean () {
+
+	public void clean() {
 		setEmail(null);
 		setPassword(null);
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -91,4 +71,13 @@ public class LoginController implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }
