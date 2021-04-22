@@ -17,11 +17,10 @@
 						<p:dataTable rows="10" paginator="true"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-							rowsPerPageTemplate="5,10,15" id="dtMusics" 
-							emptyMessage="No customers found with given criteria" 
-							widgetVar="postsTable"
+							rowsPerPageTemplate="5,10,15" id="dtPost" 
+							emptyMessage="No posts found"
 							value="#{postController.postList}"
-							filteredValue="#{postController.postListFiltered}" var="obj">
+							var="obj">
 							
 							<p:column headerText="ID">
 								<p:outputLabel value="#{obj.id}" />
@@ -37,6 +36,18 @@
 							
 							<p:column headerText="Lyrics">
 								<p:outputLabel value="#{obj.content}" />
+							</p:column>
+							
+							<p:column headerText="Edit">
+								<p:commandButton value="Edit"
+									actionListener="#{postController.edit(obj)}" process="@form"
+									update="@form"></p:commandButton>
+							</p:column>
+
+							<p:column headerText="Remove">
+								<p:commandButton value="Remove"
+									actionListener="#{postController.remove(obj)}" process="@this"
+									update="dtPost"/>
 							</p:column>
 							
 						</p:dataTable>

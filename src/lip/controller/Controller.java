@@ -30,8 +30,6 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 			e.printStackTrace();
 			Util.addErrorMessage("Error on saving");
 		}
-		
-		clean();
 	}
 
 	public void remove(T entity) {

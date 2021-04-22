@@ -1,7 +1,5 @@
 package lip.controller;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,11 +85,13 @@ public class UserController extends Controller<User> {
 	@Override
 	public void save() {
 		super.save();
+		Util.redirect("/lip/views/user/index.xhtml");
 	}
 	
 	@Override
 	public void remove(User user) {
 		super.remove(user);
+		Util.redirect("/lip/views/user/index.xhtml");
 	}
 	
 	public String returnToIndex () {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -22,8 +24,13 @@ public class PostController extends Controller<Post> {
 	private static final long serialVersionUID = 1L;
 
 	private List<Post> postList;
-	private List<Post> postListFiltered;
 	
+	public PostController() {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.keep("flashPost");
+		entity = (Post) flash.get("flashPost");
+	}
+
 	public List<Post> getPostList() {
 		if (postList == null) {
 			postList = new ArrayList<Post>();
@@ -43,24 +50,6 @@ public class PostController extends Controller<Post> {
 		return PostType.values();
 	}
 	
-	public List<Post> getPostListFiltered() {
-		return postListFiltered;
-	}
-	
-	public void setPostListFiltered(List<Post> postListFiltered) {
-		this.postListFiltered = postListFiltered;
-	}
-
-	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
-        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-        if (LangUtils.isValueBlank(filterText)) {
-            return true;
-        }
-
-        Post post = (Post) value;
-        return post.getTitle().toLowerCase().contains(filterText);
-    }
-	
 	public void setPostList(List<Post> postList) {
 		this.postList = postList;
 	}
@@ -76,5 +65,25 @@ public class PostController extends Controller<Post> {
 	@Override
 	public void save() {
 		super.save();
+		Util.redirect("/lip/views/post/index.xhtml");
+	}
+	
+	@Override
+	public void remove(Post entity) {
+		super.remove(entity);
+		Util.redirect("/lip/views/post/index.xhtml");
+	}
+	
+	public String returnToIndex () {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.clear();
+		return "index.xhtml?faces-redirect=true";
+	}
+	
+	@Override
+	public void edit(Post entity) {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("flashPost", entity);
+		Util.redirect("/lip/views/post/form.xhtml");
 	}
 }

@@ -10,35 +10,48 @@
 		<main>
 			<div class="container">
 				<h:form>
-				<div class="title">Musics
-					<p:linkButton outcome="form" styleClass="rounded-button ui-button-warning" value="Adicionar Novo" style="float:right;"></p:linkButton>
-				</div>
+					<div class="title">
+						Musics
+						<p:linkButton outcome="form"
+							styleClass="rounded-button ui-button-warning"
+							value="Adicionar Novo" style="float:right;"></p:linkButton>
+					</div>
 					<div class="data-table">
 						<p:dataTable rows="10" paginator="true"
 							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 							currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-							rowsPerPageTemplate="5,10,15" id="dtMusics" 
-							emptyMessage="No customers found with given criteria" 
-							widgetVar="musicsTable"
-							value="#{musicController.musicList}"
-							filteredValue="#{musicController.musicListFiltered}" var="obj">
-							
+							rowsPerPageTemplate="5,10,15" id="dtMusic"
+							emptyMessage="No musics found"
+							value="#{musicController.musicList}" var="obj">
+
 							<p:column headerText="ID">
 								<p:outputLabel value="#{obj.id}" />
 							</p:column>
-							
-							<p:column headerText="Title" >
+
+							<p:column headerText="Title">
 								<p:outputLabel value="#{obj.title}" />
 							</p:column>
-							
+
 							<p:column headerText="Lyrics">
 								<p:outputLabel value="#{obj.lyrics}" />
 							</p:column>
-							
+
 							<p:column headerText="Thumb">
 								<p:outputLabel value="#{obj.image}" />
 							</p:column>
-							
+
+							<p:column headerText="Edit">
+								<p:commandButton value="Edit"
+									actionListener="#{musicController.edit(obj)}" process="@form"
+									update="@form"></p:commandButton>
+							</p:column>
+
+							<p:column headerText="Remove">
+								<p:commandButton value="Remove"
+									actionListener="#{musicController.remove(obj)}" process="@this"
+									update="dtMusic" />
+							</p:column>
+
 						</p:dataTable>
 					</div>
 				</h:form>

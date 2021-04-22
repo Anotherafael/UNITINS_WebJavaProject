@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.primefaces.util.LangUtils;
 
 import lip.model.Music;
+import lip.model.Post;
 import lip.repository.MusicRepository;
 import lip.repository.RepositoryException;
 import lip.util.Util;
@@ -21,7 +24,12 @@ public class MusicController extends Controller<Music> {
 	private static final long serialVersionUID = 1L;
 
 	private List<Music> musicList;
-	private List<Music> musicListFiltered;
+	
+	public MusicController() {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.keep("flashMusic");
+		entity = (Music) flash.get("flashMusic");
+	}
 	
 	public List<Music> getMusicList() {
 		if (musicList == null) {
@@ -38,24 +46,6 @@ public class MusicController extends Controller<Music> {
 		return musicList;
 	}
 	
-	public List<Music> getMusicListFiltered() {
-		return musicListFiltered;
-	}
-	
-	public void setMusicListFiltered(List<Music> musicListFiltered) {
-		this.musicListFiltered = musicListFiltered;
-	}
-
-	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
-        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-        if (LangUtils.isValueBlank(filterText)) {
-            return true;
-        }
-
-        Music music = (Music) value;
-        return music.getTitle().toLowerCase().contains(filterText);
-    }
-	
 	public void setMusicList(List<Music> musicList) {
 		this.musicList = musicList;
 	}
@@ -71,6 +61,26 @@ public class MusicController extends Controller<Music> {
 	@Override
 	public void save() {
 		super.save();
+		Util.redirect("/lip/views/music/index.xhtml");
+	}
+	
+	@Override
+	public void remove(Music entity) {
+		super.remove(entity);
+		Util.redirect("/lip/views/music/index.xhtml");
+	}
+	
+	public String returnToIndex () {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.clear();
+		return "index.xhtml?faces-redirect=true";
+	}
+	
+	@Override
+	public void edit(Music entity) {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("flashMusic", entity);
+		Util.redirect("/lip/views/music/form.xhtml");
 	}
 
 }

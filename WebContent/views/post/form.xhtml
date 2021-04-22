@@ -11,9 +11,9 @@
 			<div class="container">
 				<div class="title">
 					Posts
-					<p:linkButton outcome="index"
-						styleClass="rounded-button ui-button-warning" value="Voltar"
-						style="float:right;"></p:linkButton>
+					<p:commandButton action="#{userController.returnToIndex}"
+						styleClass="rounded-button ui-button-warning" style="float:right;"
+						value="Voltar"></p:commandButton>
 				</div>
 				<h:form>
 					<p:growl id="growl" showDetail="true" />
