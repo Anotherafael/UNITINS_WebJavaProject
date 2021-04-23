@@ -22,10 +22,6 @@
 							value="#{postController.postList}"
 							var="obj">
 							
-							<p:column headerText="ID">
-								<p:outputLabel value="#{obj.id}" />
-							</p:column>
-							
 							<p:column headerText="Title" >
 								<p:outputLabel value="#{obj.title}" />
 							</p:column>
@@ -34,7 +30,7 @@
 								<p:outputLabel value="#{obj.postType.label}" />
 							</p:column>
 							
-							<p:column headerText="Lyrics">
+							<p:column headerText="Content">
 								<p:outputLabel value="#{obj.content}" />
 							</p:column>
 							
