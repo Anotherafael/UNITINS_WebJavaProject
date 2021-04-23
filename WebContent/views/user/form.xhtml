@@ -68,28 +68,39 @@
 									<p:inputText id="itNumber" type="text"
 										placeholder="Qual o telefone?"
 										value="#{userController.phone.number}" />
+									<p:commandButton styleClass="btn-form" value="Add"
+										actionListener="#{userController.addContact}"
+										process="@this itNumber" update="dtContact" />
 								</div>
-								<p:commandButton value="Adicionar"
-									actionListener="#{userController.addContact}"
-									process="@this itNumber" update="itNumber" />
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Email" />
+									<p:inputText id="itContactEmail" type="text"
+										placeholder="Qual o email?"
+										value="#{userController.email.email}" />
+									<p:commandButton value="Add"
+										actionListener="#{userController.addContact}"
+										process="@this itContactEmail" update="dtContact" />
+								</div>
 							</div>
 							
-							<p:dataTable id="dtPhone"
-								value="#{userController.entity.listContacts}" var="obj">
+							<div class="data-table">
+								<p:dataTable id="dtContact"
+									value="#{userController.entity.listContacts}" var="obj">
 
-								<p:column>
-									<f:facet name="header">Number</f:facet>
-									<p:outputLabel value="#{obj}" />
-								</p:column>
-								<p:column>
+									<p:column>
+										<f:facet name="header">Contato</f:facet>
+										<p:outputLabel value="#{obj}" />
+									</p:column>
 
-									<f:facet name="header">Ação</f:facet>
-									<p:commandButton value="Remover"
-										actionListener="#{userController.removeContact(obj)}"
-										process="@this" update="dtPhone" />
-								</p:column>
+									<p:column>
+										<f:facet name="header">Ação</f:facet>
+										<p:commandButton value="Remover"
+											actionListener="#{userController.removeContact(obj)}"
+											process="@this" update="dtContact" />
+									</p:column>
 
-							</p:dataTable>
+								</p:dataTable>
+							</div>
 							
 							<p:commandButton style="float:right;" styleClass="rounded-button"
 								value="Submit" actionListener="#{userController.save}"
