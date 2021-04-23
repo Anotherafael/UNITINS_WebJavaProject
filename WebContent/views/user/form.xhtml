@@ -20,48 +20,58 @@
 					<p:growl id="growl" showDetail="true" />
 					<p:wizard backLabel="Return" nextLabel="Next" styleClass="wizard">
 						<p:tab id="tabDadosPrincipais" title="Dados Principais">
+							<p:messages />
 							<div class="details">
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Name" />
+									<p:outputLabel for="itName" styleClass="input-details"
+										value="Name" />
 									<p:inputText id="itName" type="text" placeholder="Qual o nome?"
-										value="#{userController.entity.name}" />
+										value="#{userController.entity.name}" required="true" />
 								</div>
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Nickname" />
+									<p:outputLabel for="itNickname" styleClass="input-details"
+										value="Nickname" />
 									<p:inputText id="itNickname" type="text"
 										placeholder="Qual o nome fantasia?"
-										value="#{userController.entity.nickname}" />
+										value="#{userController.entity.nickname}" required="true" />
 								</div>
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="CPF   " />
+									<p:outputLabel for="itCpf" styleClass="input-details"
+										value="CPF   " />
 									<p:inputMask id="itCpf" type="text"
 										value="#{userController.entity.cpf}" mask="999.999.999-99"
-										validateMask="true" placeholder="Qual o CPF?">
+										validateMask="true" placeholder="Qual o CPF?" required="true">
 										<f:validateLength minimum="14" />
 									</p:inputMask>
 								</div>
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Email" />
+									<p:outputLabel for="itEmail" styleClass="input-details"
+										value="Email" />
 									<p:inputText id="itEmail" type="text"
 										placeholder="Qual o email?"
-										value="#{userController.entity.email}" />
+										value="#{userController.entity.email}" required="true" />
 								</div>
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Password" />
+									<p:outputLabel for="pwd1" styleClass="input-details"
+										value="Password" />
 									<p:password id="pwd1" match="pwd2" feedback="true"
-										label="Senha" required="true" placeholder="Digite a senha" />
+										label="Senha" required="true" placeholder="Digite a senha">
+										<f:validateLength minimum="6"/>
+										</p:password>
 								</div>
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details"
+									<p:outputLabel for="pwd2" styleClass="input-details"
 										value="Confirm Password" />
 									<p:password id="pwd2" value="#{userController.entity.password}"
 										match="pwd2" label="Confirmação de Senha" required="true"
-										placeholder="Repita a senha" />
+										placeholder="Repita a senha">
+										<f:validateLength minimum="6" />
+									</p:password>
 								</div>
 							</div>
 						</p:tab>
 						<p:tab id="tabContacts" title="Contatos">
-						
+
 							<div class="details">
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Phone" />
@@ -82,7 +92,7 @@
 										process="@this itContactEmail" update="dtContact" />
 								</div>
 							</div>
-							
+
 							<div class="data-table">
 								<p:dataTable id="dtContact"
 									value="#{userController.entity.listContacts}" var="obj">
@@ -101,11 +111,11 @@
 
 								</p:dataTable>
 							</div>
-							
+
 							<p:commandButton style="float:right;" styleClass="rounded-button"
 								value="Submit" actionListener="#{userController.save}"
 								process="@form" update="@form" />
-								
+
 						</p:tab>
 					</p:wizard>
 				</h:form>

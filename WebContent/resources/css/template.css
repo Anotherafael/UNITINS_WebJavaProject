@@ -173,8 +173,24 @@ form .details .input-box {
 	transition: all 0.3 ease;
 }
 
+.details .input-box .select-one {
+	height: 45px;
+	width: calc(100% - 10px);
+	outline: none;
+	border-radius: 5px;
+	border: 0.5px solid #ccc;
+	padding-left: 15px;
+	font-size: 1rem;
+	transition: all 0.3 ease;
+}
+
 .details .input-box input:focus,
 .details .input-box input:valid{
+	border-color: var(--color-dark);
+}
+
+.details .input-box .select-one,
+.details .input-box .select-one:valid{
 	border-color: var(--color-dark);
 }
 

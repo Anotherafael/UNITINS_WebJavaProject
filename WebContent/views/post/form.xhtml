@@ -16,21 +16,28 @@
 						value="Voltar"></p:commandButton>
 				</div>
 				<h:form>
-					<p:growl id="growl" showDetail="true" />
+					<p:growl id="growl" />
 					<div class="details">
 						<div class="input-box">
-							<p:outputLabel styleClass="input-details" value="Title" />
-							<p:inputText type="text" placeholder="Qual o título?"
-								value="#{postController.entity.title}" />
+							<p:outputLabel for="title" styleClass="input-details"
+								value="Title" />
+							<p:inputText id="title" type="text" placeholder="Qual o título?"
+								value="#{postController.entity.title}" required="true" />
 						</div>
 						<div class="input-box">
-							<p:outputLabel styleClass="input-details" value="Content" />
-							<p:inputText type="text" placeholder="Qual o conteúdo?"
-								value="#{postController.entity.content}" />
+							<p:outputLabel for="content" styleClass="input-details"
+								value="Content" />
+							<p:inputText id="content" type="text"
+								placeholder="Qual o conteúdo?"
+								value="#{postController.entity.content}" required="true" />
 						</div>
 						<div class="input-box">
-							<p:selectOneMenu value="#{postController.entity.postType}">
-								<f:selectItem itemLabel="Selecione o tipo de conteúdo..." itemDisabled="true"/>
+							<p:outputLabel for="postType" styleClass="input-details"
+								value="Tipo de Conteúdo" />
+							<p:selectOneMenu id="postType" styleClass="select-one"
+								value="#{postController.entity.postType}" required="true">
+								<f:selectItem itemLabel="Selecione o tipo de conteúdo..."
+									itemDisabled="true" />
 								<f:selectItems value="#{postController.postTypeList}" var="obj"
 									itemValue="#{obj}" itemLabel="#{obj.label}" />
 							</p:selectOneMenu>
@@ -38,7 +45,7 @@
 					</div>
 					<p:commandButton style="float:right;" styleClass="rounded-button"
 						value="Submit" actionListener="#{postController.save}"
-						process="@form" update="@form" />
+						update="@form" />
 				</h:form>
 			</div>
 		</main>

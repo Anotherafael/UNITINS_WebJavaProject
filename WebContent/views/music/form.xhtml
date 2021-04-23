@@ -16,27 +16,27 @@
 						value="Voltar"></p:commandButton>
 				</div>
 				<h:form>
-					<p:growl id="growl" showDetail="true" />
+					<p:growl id="growl" />
 					<div class="details">
 						<div class="input-box">
-							<p:outputLabel styleClass="input-details" value="Title" />
-							<p:inputText type="text" placeholder="Qual o título?"
-								value="#{musicController.entity.title}" />
+							<p:outputLabel for="title" styleClass="input-details" value="Title" />
+							<p:inputText id="title" type="text" placeholder="Qual o título?"
+								value="#{musicController.entity.title}" required="true" />
 						</div>
 						<div class="input-box">
-							<p:outputLabel styleClass="input-details" value="Lyrics" />
-							<p:inputText type="text" placeholder="Qual letra da música?"
-								value="#{musicController.entity.lyrics}" />
+							<p:outputLabel for="lyrics" styleClass="input-details" value="Lyrics" />
+							<p:inputText id="lyrics" type="text" placeholder="Qual letra da música?"
+								value="#{musicController.entity.lyrics}" required="true"/>
 						</div>
 						<div class="input-box">
-							<p:outputLabel styleClass="input-details" value="Image" />
-							<p:inputText type="text" placeholder="Qual a sua Thumb?"
-								value="#{musicController.entity.image}" />
+							<p:outputLabel for="musicImage" styleClass="input-details" value="Image" />
+							<p:inputText id="musicImage" type="text" placeholder="Qual a sua Thumb?"
+								value="#{musicController.entity.image}" required="true"/>
 						</div>
 					</div>
 					<p:commandButton style="float:right;" styleClass="rounded-button"
 						value="Submit" actionListener="#{musicController.save}"
-						process="@form" update="@form" />
+						update="@form" />
 				</h:form>
 			</div>
 		</main>
