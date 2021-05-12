@@ -1,8 +1,10 @@
 package lip.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "\"emails\"")
 public class Email extends Contact {
 
 	private String email;

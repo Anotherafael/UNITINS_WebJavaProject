@@ -1,8 +1,10 @@
 package lip.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "\"phones\"")
 public class Phone extends Contact {
 
 	private String number;

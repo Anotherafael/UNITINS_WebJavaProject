@@ -22,9 +22,9 @@ public enum PostType {
 		return label;
 	}
 
-	public static PostType valueOf(int valor) {
+	public static PostType valueOf(int value) {
 		for (PostType postType : PostType.values()) {
-			if (valor == postType.getId())
+			if (value == postType.getId())
 				return postType;
 		}
 		return null;

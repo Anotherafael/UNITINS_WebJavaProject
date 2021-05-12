@@ -21,12 +21,6 @@ public class Post extends DefaultEntity<Post>{
 		super();
 	}
 	
-	public Post(String title, String content) {
-		super();
-		this.title = title;
-		this.content = content;
-	}
-	
 	public String getTitle() {
 		return title;
 	}
