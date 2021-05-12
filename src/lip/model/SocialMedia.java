@@ -2,8 +2,10 @@ package lip.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "\"social_medias\"")
 public class SocialMedia extends Contact {
 
 	@Column(nullable = false, unique = true)
