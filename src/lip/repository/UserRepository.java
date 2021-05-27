@@ -48,5 +48,50 @@ public class UserRepository extends Repository<User> {
 		
 	}
 	
+	public User findByEmail(String email) throws RepositoryException {
+		EntityManager em = getEntityManager();
+		StringBuffer jpql = new StringBuffer();
+		jpql.append("SELECT ");
+		jpql.append(" u ");
+		jpql.append("FROM ");
+		jpql.append(" User u ");
+		jpql.append("WHERE ");
+		jpql.append(" u.email = :email ");
+		
+		Query query = em.createQuery(jpql.toString());
+		query.setParameter("email", email);
+		
+		User user = null;
+		try {
+			user = (User) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 	
+	public User findUserByCode(String code) throws RepositoryException {
+		
+		EntityManager em = getEntityManager();
+		StringBuffer jpql = new StringBuffer();
+		jpql.append("SELECT ");
+		jpql.append(" u ");
+		jpql.append("FROM ");
+		jpql.append(" User u, RecoverPassword r ");
+		jpql.append("WHERE ");
+		jpql.append(" r.code = :code ");
+		
+		Query query = em.createQuery(jpql.toString());
+		query.setParameter("code", code);
+		
+		User user = null;
+		try {
+			user = (User) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 }

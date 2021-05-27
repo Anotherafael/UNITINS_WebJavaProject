@@ -8,27 +8,29 @@
 
 	<ui:define name="content">
 		<div class="login-container">
-            <p class="title">Bem-vindo!</p>
-            <div class="separator"></div>
-            <p class="welcome-message">Por favor, digite suas credenciais para ter acesso a todos os nossos serviços</p>
+			<p class="title">Bem-vindo!</p>
+			<div class="separator"></div>
+			<p class="welcome-message">Por favor, digite suas credenciais
+				para ter acesso a todos os nossos serviços</p>
 
-            <h:form class="login-form">
+			<h:form class="login-form">
 				<p:growl id="growl" showDetail="true" />
-                <div class="form-control">
-                    <span class="ui-input-icon-left">
-				        <i class="ti-user" />
-				        <p:inputText placeholder="Email" value="#{loginController.email}" required="true"/>
-				    </span>
-                </div>
-                <div class="form-control">
-                    <span class="ui-input-icon-left">
-				        <i class="ti-lock" />
-				        <p:password placeholder="Password" value="#{loginController.password}"></p:password>
-				    </span>
-                </div>
-                <p:commandButton styleClass="rounded-button submit" value="Login" actionListener="#{loginController.singIn}" ></p:commandButton>
-                <p:commandButton styleClass="ui-button-flat reset" value="Resetar Senha" ></p:commandButton>
-            </h:form>
-        </div>
+				<div class="form-control">
+					<span class="ui-input-icon-left"> <i class="ti-user" /> <p:inputText
+							placeholder="Email" value="#{loginController.email}"
+							required="true" />
+					</span>
+				</div>
+				<div class="form-control">
+					<span class="ui-input-icon-left"> <i class="ti-lock" /> <p:password
+							placeholder="Password" value="#{loginController.password}"></p:password>
+					</span>
+				</div>
+				<p:commandButton styleClass="rounded-button submit" value="Login"
+					actionListener="#{loginController.singIn}"></p:commandButton>
+			</h:form>
+			<p:linkButton outcome="reset_password"
+				styleClass="ui-button-flat reset" value="Resetar Senha"></p:linkButton>
+		</div>
 	</ui:define>
 </ui:composition>

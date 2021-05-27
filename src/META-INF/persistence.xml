@@ -8,6 +8,7 @@
 		<class>lip.model.Music</class>
 		<class>lip.model.Phone</class>
 		<class>lip.model.Post</class>
+		<class>lip.model.RecoverPassword</class>
 		<class>lip.model.SocialMedia</class>
 		<class>lip.model.User</class>
 		<class>lip.util.DefaultEntity</class>

@@ -11,19 +11,18 @@
 			<p:growl id="growl" />
 			<p class="title">Esqueceu a Senha?</p>
 			<div class="separator"></div>
-			<p class="welcome-message">Por favor, digite o email cadastrado
-				para entrarmos em contato</p>
+			<p class="welcome-message">Por favor, digite o código enviado ao seu email</p>
 
 			<h:form class="login-form">
 				<p:growl id="growl" showDetail="true" />
 				<div class="form-control">
-					<span class="ui-input-icon-left"> <i class="ti-user" /> <p:inputText
-							placeholder="Email" value="#{recoverPasswordController.email}"
+					<span class="ui-input-icon-left"> <i class="ti-email" /> <p:inputText
+							placeholder="Code" value="#{recoverPasswordController.code}"
 							required="true" />
 					</span>
 				</div>
 				<p:commandButton styleClass="rounded-button submit" value="Send"
-					actionListener="#{recoverPasswordController.send}" update="@form"></p:commandButton>
+					actionListener="#{recoverPasswordController.codeValidation}" update="@form"></p:commandButton>
 			</h:form>
 			<p:linkButton outcome="login" styleClass="ui-button-flat reset"
 				value="Voltar ao Login"></p:linkButton>
