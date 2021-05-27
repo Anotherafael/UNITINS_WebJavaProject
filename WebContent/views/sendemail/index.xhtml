@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/admin_template.xhtml">
+
+	<ui:define name="content">
+		<main>
+			<div class="container">
+				<div class="title">Send Email
+				</div>
+				<h:form>
+					<p:growl id="growl" />
+					<div class="details">
+						<div class="input-box">
+							<p:outputLabel for="toAddress" styleClass="input-details" value="Para" />
+							<p:inputText id="toAddress" type="text" placeholder="Enviar a que email?"
+								value="#{sendEmailController.toAddress}" required="true" />
+						</div>
+						<div class="input-box">
+							<p:outputLabel for="title" styleClass="input-details" value="Assunto" />
+							<p:inputText id="title" type="text" placeholder="Qual o assunto?"
+								value="#{sendEmailController.title}" required="true"/>
+						</div>
+						<div class="input-box">
+							<p:outputLabel for="content" styleClass="input-details" value="Conteúdo" />
+							<p:inputText id="content" type="text" placeholder="Qual o conteúdo?"
+								value="#{sendEmailController.content}" required="true"/>
+						</div>
+					</div>
+					<p:commandButton style="float:right;" styleClass="rounded-button"
+						value="Send Email" actionListener="#{sendEmailController.send}"
+						update="@form" />
+				</h:form>
+			</div>
+		</main>
+	</ui:define>
+</ui:composition>

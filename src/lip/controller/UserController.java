@@ -58,7 +58,7 @@ public class UserController extends Controller<User> {
 			getEntity().setListContacts(new ArrayList<Contact>());
 
 		if (getPhone().getNumber() == null) {
-			if (getEmail().getEmail() == null) {
+			if (getEmail().getAddress() == null) {
 				phone = null;
 				email = null;
 				return;
@@ -72,7 +72,7 @@ public class UserController extends Controller<User> {
 		} else {
 			getPhone().setUser(getEntity());
 			getEntity().getListContacts().add(getPhone());
-			if (getEmail().getEmail() == null) {
+			if (getEmail().getAddress() == null) {
 				phone = null;
 				email = null;
 				return;

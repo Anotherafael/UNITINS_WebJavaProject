@@ -65,7 +65,7 @@
 									<p:outputLabel styleClass="input-details" value="Email" />
 									<p:inputText id="itContactEmail" type="text"
 										placeholder="Qual o email?"
-										value="#{userController.email.email}" />
+										value="#{userController.email.address}" />
 									<p:commandButton value="Add"
 										actionListener="#{userController.addContact}"
 										process="@this itContactEmail" update="dtContact" />

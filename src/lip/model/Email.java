@@ -3,30 +3,31 @@ package lip.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "\"emails\"")
 public class Email extends Contact {
 
-	private String email;
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	private String address;
 	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
-		return getEmail();
+		return getAddress();
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
 		return result;
 	}
 
@@ -39,14 +40,12 @@ public class Email extends Contact {
 		if (getClass() != obj.getClass())
 			return false;
 		Email other = (Email) obj;
-		if (email == null) {
-			if (other.email != null)
+		if (address == null) {
+			if (other.address != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!address.equals(other.address))
 			return false;
 		return true;
 	}
-	
-	
 	
 }
