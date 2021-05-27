@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import lip.model.RecoverPassword;
 import lip.model.User;
+import lip.repository.RecoverPasswordRepository;
 import lip.repository.Repository;
 import lip.repository.RepositoryException;
 import lip.repository.UserRepository;
@@ -78,7 +79,7 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 		DecimalFormat format = new DecimalFormat("000");
 		String code = format.format(firstValue) + format.format(secondValue);
 
-		JakartaEmail email = new JakartaEmail(getEmail(), "Esqueceu Senha", "Informe o seguinte código: " + code);
+		JakartaEmail email = new JakartaEmail(getEmail(), "Esqueceu Senha", "Informe o seguinte código: " + code + " em http://localhost:8000/lip/views/auth/validation.xhtml");
 		getEntity().setCode(code);
 		getEntity().setUser(user);
 		// gerando a data com 24 horas a mais
@@ -118,14 +119,29 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 	public boolean codeValidation() {
 		
 		UserRepository repo = new UserRepository();
+		RecoverPasswordRepository passwordRepo = new RecoverPasswordRepository();
+		
 		User user = null;
+		RecoverPassword recover = null;
 		try {
+			recover = passwordRepo.findByCode(getCode());
 			user = repo.findUserByCode(getCode());
 		} catch (RepositoryException e) {
+			Util.addErrorMessage("Código inválido.");
 			e.printStackTrace();
 			return false;
 		}
 
+		if(recover.isUsed()) {
+			Util.addErrorMessage("Código já utilizado.");
+			return false;
+		}
+		
+		if(recover.getLimitDate().isBefore(LocalDateTime.now())) {
+			Util.addErrorMessage("Código expirado.");
+			return false;
+		}
+		
 		if (user == null) {
 			Util.addErrorMessage("Não foi encontrado esse email no sistema.");
 			return false;
@@ -133,6 +149,19 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 		
 		System.out.println(user);
 		RecoverPasswordController.user = user;
+		recover.setUsed(true);
+		
+		Repository<RecoverPassword> repoRecover = new Repository<RecoverPassword>();
+		try {
+			repoRecover.beginTransaction();
+			repoRecover.save(recover);
+			repoRecover.commitTransaction();
+		} catch (RepositoryException e) {
+			repo.rollbackTransaction();
+			Util.addErrorMessage("Não foi possível atualizar a senha.");
+			return false;
+		}
+		
 		Util.addInfoMessage("Usuário encontrado.");
 		Util.redirect("/lip/views/auth/new_password.xhtml");
 		return true;
