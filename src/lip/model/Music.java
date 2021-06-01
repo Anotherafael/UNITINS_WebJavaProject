@@ -1,7 +1,11 @@
 package lip.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lip.util.DefaultEntity;
@@ -14,18 +18,12 @@ public class Music extends DefaultEntity<Music>{
 	private String title;
 	@Column(nullable = false, length = 500)	
 	private String lyrics;
-	@Column(nullable = true, length = 100)	
-	private String image;
+	
+	@OneToMany(mappedBy="music", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Link> listLinks;
 	
 	public Music () {
 		super();
-	}
-	
-	public Music(String title, String lyrics, String image) {
-		super();
-		this.title = title;
-		this.lyrics = lyrics;
-		this.image = image;
 	}
 
 	public String getTitle() {
@@ -40,18 +38,19 @@ public class Music extends DefaultEntity<Music>{
 	public void setLyrics(String lyrics) {
 		this.lyrics = lyrics;
 	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
+
+	public List<Link> getListLinks() {
+		return listLinks;
 	}
 
+	public void setListLinks(List<Link> listLinks) {
+		this.listLinks = listLinks;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((image == null) ? 0 : image.hashCode());
 		result = prime * result + ((lyrics == null) ? 0 : lyrics.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
@@ -66,11 +65,6 @@ public class Music extends DefaultEntity<Music>{
 		if (getClass() != obj.getClass())
 			return false;
 		Music other = (Music) obj;
-		if (image == null) {
-			if (other.image != null)
-				return false;
-		} else if (!image.equals(other.image))
-			return false;
 		if (lyrics == null) {
 			if (other.lyrics != null)
 				return false;

@@ -3,6 +3,7 @@ package lip.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
@@ -16,6 +17,7 @@ import lip.repository.RepositoryException;
 import lip.repository.UserRepository;
 import lip.util.Util;
 
+@ManagedBean
 @Named
 @ViewScoped
 public class UserController extends Controller<User> {
@@ -123,17 +125,17 @@ public class UserController extends Controller<User> {
 		super.save();
 		Util.redirect("/lip/views/user/index.xhtml");
 	}
-
+	
 	@Override
 	public void remove(User user) {
 		super.remove(user);
 		Util.redirect("/lip/views/user/index.xhtml");
 	}
 
-	public String returnToIndex() {
+	public void returnToIndex() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.clear();
-		return "index.xhtml?faces-redirect=true";
+		Util.redirect("/lip/views/user/index.xhtml");
 	}
 
 	@Override

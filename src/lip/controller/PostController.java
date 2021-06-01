@@ -71,10 +71,10 @@ public class PostController extends Controller<Post> {
 		Util.redirect("/lip/views/post/index.xhtml");
 	}
 	
-	public String returnToIndex () {
+	public void returnToIndex () {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.clear();
-		return "index.xhtml?faces-redirect=true";
+		Util.redirect("/lip/views/post/index.xhtml");
 	}
 	
 	@Override

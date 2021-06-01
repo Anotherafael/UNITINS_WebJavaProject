@@ -3,11 +3,9 @@ package lip.model;
 public enum Platform {
 
 	INSTAGRAM (1, "Instagram"),
-	SOUNDCLOUD (1, "Soundcloud"),
-	YOUTUBE (1, "Youtube"),
-	SPOTIFY (1, "Spotify"),
-	FACEBOOK (1, "Facebook"),
-	TWITTER (1, "Twitter");
+	SOUNDCLOUD (2, "Soundcloud"),
+	YOUTUBE (3, "Youtube"),
+	SPOTIFY (4, "Spotify");
 	
 	private Integer id;
 	private String label;

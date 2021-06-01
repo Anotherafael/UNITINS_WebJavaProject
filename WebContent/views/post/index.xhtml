@@ -34,16 +34,15 @@
 								<p:outputLabel value="#{obj.content}" />
 							</p:column>
 							
-							<p:column headerText="Edit">
-								<p:commandButton value="Edit"
-									actionListener="#{postController.edit(obj)}" process="@form"
-									update="@form"></p:commandButton>
-							</p:column>
-
-							<p:column headerText="Remove">
-								<p:commandButton value="Remove"
-									actionListener="#{postController.remove(obj)}" process="@this"
-									update="dtPost"/>
+							<p:column exportable="false" >
+								<div style="float: right;">
+									<p:commandButton icon="pi pi-pencil" styleClass="rounded-button ui-button-success"
+										actionListener="#{postController.edit(obj)}" process="@form"
+										update="@form"></p:commandButton>
+									<p:commandButton icon="pi pi-trash" styleClass="ui-button-danger rounded-button"
+										actionListener="#{postController.remove(obj)}" process="@this"
+										update="dtPost" />
+								</div>
 							</p:column>
 							
 						</p:dataTable>

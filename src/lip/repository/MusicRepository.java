@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import lip.model.Music;
-import lip.model.User;
 import lip.util.JPAUtil;
 
 public class MusicRepository extends Repository<Music> {

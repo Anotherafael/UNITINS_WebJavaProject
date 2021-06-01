@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -31,6 +32,8 @@ public class SecurityFilter implements Filter {
 			pagesWithPermissions.add("/lip/views/post/index.xhtml");
 			pagesWithPermissions.add("/lip/views/post/form.xhtml");
 			pagesWithPermissions.add("/lip/views/auth/login.xhtml");
+			pagesWithPermissions.add("/lip/views/home/index.xhtml");
+			pagesWithPermissions.add("/lip/views/img-music");
 		}
 		return pagesWithPermissions;
 	}
@@ -43,47 +46,41 @@ public class SecurityFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
-		// Comente/Descomente para desativar o filter
-		 chain.doFilter(request, response);
-		 return;
+		HttpServletRequest servletRequest = (HttpServletRequest) request;
 
-		//HttpServletRequest servletRequest = (HttpServletRequest) request;
-		// imprime o endereço da página
-		//String url = servletRequest.getRequestURI();
-		//System.out.println(url);
-		// ex. /lip/views/user/index.xhtml
+		String url = servletRequest.getRequestURI();
+		System.out.println(url);
+		// ||
+		if (url.equals("/lip/views/auth/login.xhtml") || url.equals("/lip/views/home/index.xhtml")
+				|| url.equals("/lip/views/auth/new_password.xhtml")
+				|| url.equals("/lip/views/auth/reset_password.xhtml")
+				|| url.equals("/lip/views/auth/validation.xhtml")) {
+			chain.doFilter(request, response);
+			return;
+		}
 
-		//if (url.equals("/lip/views/auth/login.xhtml")) {
-		//	chain.doFilter(request, response);
-		//	return;
-		//}
+		HttpSession session = servletRequest.getSession(false);
 
-		// filtrando o nome da pagina
-//		if (url != null) {
-//			int inicio = url.lastIndexOf("/DataNext/") + 7;
-//			int fim = url.length();
-//			url = url.substring(inicio, fim);
-//		}
-		// System.out.println(url);
-//		ex.   pages/usuario.xhtml
+		User user = null;
+		if (session != null)
+			user = (User) session.getAttribute("loggedInUser");
 
-		//HttpSession session = servletRequest.getSession(false);
+		if (user == null) {
+			((HttpServletResponse) response).sendRedirect("/lip/views/home/index.xhtml");
+		} else {
+			if (url.equals("/lip/views/auth/login.xhtml"))
+				((HttpServletResponse) response).sendRedirect("/lip/views/user/index.xhtml");
+			if (getPagesWithPermissions().contains(url)) {
+				chain.doFilter(request, response);
+				return;
+			} else {
+				((HttpServletResponse) response).sendRedirect("/lip/views/home/index.xhtml");
+			}
+		}
+	}
 
-		//User user = null;
-		//if (session != null)
-		//	user = (User) session.getAttribute("loggedInUser");
-
-		//if (user == null) {
-		//	((HttpServletResponse) response).sendRedirect("/lip/views/auth/login.xhtml");
-		//} else {
-		//	if (url.equals("/lip/views/auth/login.xhtml"))
-		//		((HttpServletResponse) response).sendRedirect("/lip/views/user/index.xhtml");
-		//	if (getPagesWithPermissions().contains(url)) {
-		//		chain.doFilter(request, response);
-		//		return;
-		//	} else {
-		//		((HttpServletResponse) response).sendRedirect("/lip/views/auth/login.xhtml");
-		//	}
-		//}
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+		System.out.println("SecurityFilter Iniciado.");
 	}
 }

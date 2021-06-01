@@ -32,7 +32,6 @@ public class LoginController implements Serializable {
 		String email = getEmail();
 		String password = getPassword();
 		query.setParameter("email", email);
-		//Converte o password para Hash, assim podemos fazer a busca no Banco de Dados.
 		query.setParameter("password", Util.hash(password));
 		
 		try {

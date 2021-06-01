@@ -24,6 +24,12 @@
 							emptyMessage="No musics found"
 							value="#{musicController.musicList}" var="obj">
 
+							<p:column headerText="Thumb">
+								<img class="img-responsive"
+									style="max-width: 80px !important; max-height: 80px !important;"
+									src="/lip/views/img-music?id=#{obj.id}.png" />
+							</p:column>
+							
 							<p:column headerText="Title">
 								<p:outputLabel value="#{obj.title}" />
 							</p:column>
@@ -32,20 +38,17 @@
 								<p:outputLabel value="#{obj.lyrics}" />
 							</p:column>
 
-							<p:column headerText="Thumb">
-								<p:outputLabel value="#{obj.image}" />
-							</p:column>
-
-							<p:column headerText="Edit">
-								<p:commandButton value="Edit"
-									actionListener="#{musicController.edit(obj)}" process="@form"
-									update="@form"></p:commandButton>
-							</p:column>
-
-							<p:column headerText="Remove">
-								<p:commandButton value="Remove"
-									actionListener="#{musicController.remove(obj)}" process="@this"
-									update="dtMusic" />
+							<p:column exportable="false">
+								<div style="float: right;">
+									<p:commandButton icon="pi pi-pencil"
+										styleClass="rounded-button ui-button-success"
+										actionListener="#{musicController.edit(obj)}" process="@form"
+										update="@form"></p:commandButton>
+									<p:commandButton icon="pi pi-trash"
+										styleClass="ui-button-danger rounded-button"
+										actionListener="#{musicController.remove(obj)}"
+										process="@this" update="dtMusic" />
+								</div>
 							</p:column>
 
 						</p:dataTable>

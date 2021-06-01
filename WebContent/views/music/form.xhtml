@@ -4,6 +4,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:ph="http://primefaces.org/harmony"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	template="/resources/template/admin_template.xhtml">
 
 	<ui:define name="content">
@@ -11,32 +12,115 @@
 			<div class="container">
 				<div class="title">
 					Musics
-					<p:commandButton action="#{userController.returnToIndex}"
-						styleClass="rounded-button ui-button-warning" style="float:right;"
-						value="Voltar"></p:commandButton>
+					<p:linkButton outcome="index"
+						styleClass="rounded-button ui-button-warning" value="Voltar"
+						style="float:right;"></p:linkButton>
 				</div>
-				<h:form>
+				<h:form enctype="multipart/form-data">
 					<p:growl id="growl" />
-					<div class="details">
-						<div class="input-box">
-							<p:outputLabel for="title" styleClass="input-details" value="Title" />
-							<p:inputText id="title" type="text" placeholder="Qual o título?"
-								value="#{musicController.entity.title}" required="true" />
-						</div>
-						<div class="input-box">
-							<p:outputLabel for="lyrics" styleClass="input-details" value="Lyrics" />
-							<p:inputText id="lyrics" type="text" placeholder="Qual letra da música?"
-								value="#{musicController.entity.lyrics}" required="true"/>
-						</div>
-						<div class="input-box">
-							<p:outputLabel for="musicImage" styleClass="input-details" value="Image" />
-							<p:inputText id="musicImage" type="text" placeholder="Qual a sua Thumb?"
-								value="#{musicController.entity.image}" required="true"/>
-						</div>
-					</div>
-					<p:commandButton style="float:right;" styleClass="rounded-button"
-						value="Submit" actionListener="#{musicController.save}"
-						update="@form" />
+					<p:wizard backLabel="Return" nextLabel="Next" styleClass="wizard" >
+
+						<p:tab id="tabDadosMusica" title="Dados Principais">
+							<p:messages />
+							<div class="details">
+								<div class="input-box">
+									<p:outputLabel for="title" styleClass="input-details"
+										value="Title" />
+									<p:inputText id="title" type="text"
+										placeholder="Qual o título?"
+										value="#{musicController.entity.title}" required="true" />
+								</div>
+								<div class="input-box">
+									<p:outputLabel for="lyrics" styleClass="input-details"
+										value="Lyrics" />
+									<p:inputText id="lyrics" type="text"
+										placeholder="Qual letra da música?"
+										value="#{musicController.entity.lyrics}" required="true" />
+								</div>
+								<div class="input-box">
+									<h:form enctype="multipart/form-data">
+										<p:fileUpload listener="#{musicController.upload}"
+											label="#{musicController.nomeFoto}" mode="advanced"
+											update="@this messages" auto="false"
+											allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+										<p:growl id="messages" showDetail="true" />
+									</h:form>
+								</div>
+							</div>
+						</p:tab>
+						<p:tab id="tabLinks" title="Links">
+							<div class="details">
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Instagram" />
+									<p:inputText id="itInstagram" type="text"
+										placeholder="Qual o link?"
+										value="#{musicController.instagram.url}" />
+									<p:commandButton styleClass="btn-form" value="Add"
+										actionListener="#{musicController.addLink}"
+										process="@this itInstagram" update="dtLinks" />
+								</div>
+
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Soundcloud" />
+									<p:inputText id="itSoundcloud" type="text"
+										placeholder="Qual o link?"
+										value="#{musicController.soundcloud.url}" />
+									<p:commandButton styleClass="btn-form" value="Add"
+										actionListener="#{musicController.addLink}"
+										process="@this itSoundcloud" update="dtLinks" />
+								</div>
+
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Youtube" />
+									<p:inputText id="itYoutube" type="text"
+										placeholder="Qual o link?"
+										value="#{musicController.youtube.url}" />
+									<p:commandButton styleClass="btn-form" value="Add"
+										actionListener="#{musicController.addLink}"
+										process="@this itYoutube" update="dtLinks" />
+								</div>
+
+								<div class="input-box">
+									<p:outputLabel styleClass="input-details" value="Spotify" />
+									<p:inputText id="itSpotify" type="text"
+										placeholder="Qual o link?"
+										value="#{musicController.spotify.url}" />
+									<p:commandButton styleClass="btn-form" value="Add"
+										actionListener="#{musicController.addLink}"
+										process="@this itSpotify" update="dtLinks" />
+								</div>
+							</div>
+
+							<div class="data-table">
+								<p:dataTable id="dtLinks"
+									value="#{musicController.entity.listLinks}" var="obj">
+
+									<p:column>
+										<f:facet name="header">Platform</f:facet>
+										<p:outputLabel value="#{obj.platform.label}" />
+									</p:column>
+
+									<p:column>
+										<f:facet name="header">Url</f:facet>
+										<p:outputLabel value="#{obj.url}" />
+									</p:column>
+
+									<p:column exportable="false">
+										<div style="float: right;">
+											<p:commandButton icon="pi pi-trash"
+												styleClass="ui-button-danger rounded-button"
+												actionListener="#{musicController.removeLink(obj)}"
+												process="@this" update="dtLinks" />
+										</div>
+									</p:column>
+
+								</p:dataTable>
+							</div>
+							<p:commandButton style="float:right;" styleClass="rounded-button"
+								value="Submit" actionListener="#{musicController.save}"
+								update="@form" />
+						</p:tab>
+					</p:wizard>
 				</h:form>
 			</div>
 		</main>

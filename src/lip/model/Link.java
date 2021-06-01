@@ -2,27 +2,28 @@ package lip.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lip.util.DefaultEntity;
 
 @Entity
 @Table(name = "\"links\"")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Link extends DefaultEntity<Link>{
 
 	@Column(nullable = false, length = 100, unique = true)
 	private String url;
-	@Column(nullable = false, length = 20)
-	private String platform;
+	@Column(nullable = false)
+	private Platform platform;
+	
+	@ManyToOne
+	private Music music;
 	
 	public Link() {
 		
-	}
-
-	public Link(String url, String platform) {
-		super();
-		this.url = url;
-		this.platform = platform;
 	}
 
 	public String getUrl() {
@@ -33,12 +34,20 @@ public class Link extends DefaultEntity<Link>{
 		this.url = url;
 	}
 
-	public String getPlatform() {
+	public Platform getPlatform() {
 		return platform;
 	}
 
-	public void setPlatform(String platform) {
+	public void setPlatform(Platform platform) {
 		this.platform = platform;
+	}
+
+	public Music getMusic() {
+		return music;
+	}
+
+	public void setMusic(Music music) {
+		this.music = music;
 	}
 
 	@Override

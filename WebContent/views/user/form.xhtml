@@ -56,8 +56,8 @@
 										value="Password" />
 									<p:password id="pwd1" match="pwd2" feedback="true"
 										label="Senha" required="true" placeholder="Digite a senha">
-										<f:validateLength minimum="6"/>
-										</p:password>
+										<f:validateLength minimum="6" />
+									</p:password>
 								</div>
 								<div class="input-box">
 									<p:outputLabel for="pwd2" styleClass="input-details"
@@ -71,12 +71,12 @@
 							</div>
 						</p:tab>
 						<p:tab id="tabContacts" title="Contatos">
-
+							<p:messages />
 							<div class="details">
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Phone" />
-									<p:inputText id="itNumber" type="text"
-										placeholder="Qual o telefone?"
+									<p:inputMask id="itNumber" type="text" mask="(99) 99999-9999"
+										validateMask="true" placeholder="Qual o telefone?"
 										value="#{userController.phone.number}" />
 									<p:commandButton styleClass="btn-form" value="Add"
 										actionListener="#{userController.addContact}"
@@ -86,7 +86,7 @@
 									<p:outputLabel styleClass="input-details" value="Email" />
 									<p:inputText id="itContactEmail" type="text"
 										placeholder="Qual o email?"
-										value="#{userController.email.email}" />
+										value="#{userController.email.address}" />
 									<p:commandButton value="Add"
 										actionListener="#{userController.addContact}"
 										process="@this itContactEmail" update="dtContact" />
@@ -102,11 +102,13 @@
 										<p:outputLabel value="#{obj}" />
 									</p:column>
 
-									<p:column>
-										<f:facet name="header">Ação</f:facet>
-										<p:commandButton value="Remover"
-											actionListener="#{userController.removeContact(obj)}"
-											process="@this" update="dtContact" />
+									<p:column exportable="false">
+										<div style="float: right;">
+											<p:commandButton icon="pi pi-trash"
+												styleClass="ui-button-danger rounded-button"
+												actionListener="#{userController.remove(obj)}"
+												process="@this" update="dtContact" />
+										</div>
 									</p:column>
 
 								</p:dataTable>

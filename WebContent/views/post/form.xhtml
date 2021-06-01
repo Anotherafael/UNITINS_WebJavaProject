@@ -11,9 +11,9 @@
 			<div class="container">
 				<div class="title">
 					Posts
-					<p:commandButton action="#{userController.returnToIndex}"
-						styleClass="rounded-button ui-button-warning" style="float:right;"
-						value="Voltar"></p:commandButton>
+					<p:linkButton outcome="index"
+						styleClass="rounded-button ui-button-warning" value="Voltar"
+						style="float:right;"></p:linkButton>
 				</div>
 				<h:form>
 					<p:growl id="growl" />
@@ -25,13 +25,6 @@
 								value="#{postController.entity.title}" required="true" />
 						</div>
 						<div class="input-box">
-							<p:outputLabel for="content" styleClass="input-details"
-								value="Content" />
-							<p:inputText id="content" type="text"
-								placeholder="Qual o conteúdo?"
-								value="#{postController.entity.content}" required="true" />
-						</div>
-						<div class="input-box">
 							<p:outputLabel for="postType" styleClass="input-details"
 								value="Tipo de Conteúdo" />
 							<p:selectOneMenu id="postType" styleClass="select-one"
@@ -41,6 +34,18 @@
 								<f:selectItems value="#{postController.postTypeList}" var="obj"
 									itemValue="#{obj}" itemLabel="#{obj.label}" />
 							</p:selectOneMenu>
+						</div>
+						<div class="input-box" style="width: 100%;">
+						<div>
+							<p:outputLabel for="content" styleClass="input-details"
+								value="Content" />
+						</div>
+						<div>
+							<p:inputTextarea id="content" style="width: 49%;" placeholder="Qual o conteúdo?" rows="10" counter="display" maxlength="500" counterTemplate="{0} characters remaining." value="#{postController.entity.content}" required="true"/>
+						</div>
+						<div>
+	        				<h:outputText id="display" class="p-d-block" />
+						</div>
 						</div>
 					</div>
 					<p:commandButton style="float:right;" styleClass="rounded-button"
