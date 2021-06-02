@@ -33,6 +33,8 @@ public class SecurityFilter implements Filter {
 			pagesWithPermissions.add("/lip/views/post/form.xhtml");
 			pagesWithPermissions.add("/lip/views/auth/login.xhtml");
 			pagesWithPermissions.add("/lip/views/home/index.xhtml");
+			pagesWithPermissions.add("/lip/views/home/music.xhtml");
+			pagesWithPermissions.add("/lip/views/home/music_info.xhtml");
 			pagesWithPermissions.add("/lip/views/img-music");
 		}
 		return pagesWithPermissions;
@@ -52,6 +54,7 @@ public class SecurityFilter implements Filter {
 		System.out.println(url);
 		// ||
 		if (url.equals("/lip/views/auth/login.xhtml") || url.equals("/lip/views/home/index.xhtml")
+				|| url.equals("/lip/views/home/music.xhtml") || url.equals("/lip/views/home/music_info.xhtml")
 				|| url.equals("/lip/views/auth/new_password.xhtml")
 				|| url.equals("/lip/views/auth/reset_password.xhtml")
 				|| url.equals("/lip/views/auth/validation.xhtml")) {

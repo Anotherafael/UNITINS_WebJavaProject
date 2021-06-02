@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/home_template.xhtml">
+
+	<ui:define name="content">
+		<main>
+			<div class="content">
+				<p:dataGrid value="#{musicController.musicList}" var="obj" rows="12" columns="4"
+					style="justify-content: center; align-items: center; text-align:center;">
+					<p:card style="width: 22.5em; text-align:center; justify-content: center; align-items: center;">
+						<f:facet name="header">
+							<img src="/lip/views/img-music?id=#{obj.id}.png" />
+						</f:facet>
+						<f:facet name="title">
+					    #{obj.title}
+						</f:facet>
+						<div class="links">
+							<i class="pi pi-cloud" style="font-size: 30px"/>
+							<i class="pi pi-youtube" style="font-size: 30px"/>
+							<i class="pi pi-question" style="font-size: 30px"/>
+							<i class="pi pi-info-circle" style="font-size: 30px"/>
+						</div>
+					</p:card>
+				</p:dataGrid>
+			</div>
+		</main>
+	</ui:define>
+</ui:composition>
