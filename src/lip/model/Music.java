@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lip.util.DefaultEntity;
@@ -18,6 +19,9 @@ public class Music extends DefaultEntity<Music>{
 	private String title;
 	@Column(nullable = false, length = 500)	
 	private String lyrics;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	private User user;
 	
 	@OneToMany(mappedBy="music", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Link> listLinks;
@@ -37,6 +41,14 @@ public class Music extends DefaultEntity<Music>{
 	}
 	public void setLyrics(String lyrics) {
 		this.lyrics = lyrics;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public List<Link> getListLinks() {

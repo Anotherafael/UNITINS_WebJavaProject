@@ -3,6 +3,7 @@ package lip.controller;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -67,9 +68,10 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 		} catch (RepositoryException e) {
 			e.printStackTrace();
 		}
-
+		
 		if (user == null) {
-			Util.addErrorMessage("Não foi encontrado esse email no sistema.");
+			Util.addErrorMessage("Email doesn't exist");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			return;
 		}
 
@@ -82,7 +84,7 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 		JakartaEmail email = new JakartaEmail(getEmail(), "Esqueceu Senha", "Informe o seguinte código: " + code + " em http://localhost:8000/lip/views/auth/validation.xhtml");
 		getEntity().setCode(code);
 		getEntity().setUser(user);
-		// gerando a data com 24 horas a mais
+		
 		LocalDateTime limitDate = LocalDateTime.now();
 		getEntity().setLimitDate(limitDate.plusDays(1));
 		getEntity().setUsed(false);
@@ -90,13 +92,19 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 		try {
 			if (addNewPassword()) {
 				email.send();
-				Util.addInfoMessage("Email enviado");
+				Util.addInfoMessage("Email sent");
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+				Util.redirect("/lip/views/auth/login.xhtml");
 			} else {
-				Util.addErrorMessage("Problemas ao salvar no banco. Tente novamente mais tarde.");
+				Util.addErrorMessage("Error on our system. Try again in a few minutes.");
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+				Util.redirect("/lip/views/auth/login.xhtml");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Util.addErrorMessage("Problemas ao enviar o código por email.");
+			Util.addErrorMessage("Error on sending the email. Try again in a few minutes");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			Util.redirect("/lip/views/auth/login.xhtml");
 		}
 	}
 
@@ -125,29 +133,30 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 		RecoverPassword recover = null;
 		try {
 			recover = passwordRepo.findByCode(getCode());
+			System.out.println(recover);
 			user = repo.findUserByCode(getCode());
+			System.out.println(user);
 		} catch (RepositoryException e) {
-			Util.addErrorMessage("Código inválido.");
+			Util.addErrorMessage("Invalid code");
 			e.printStackTrace();
 			return false;
 		}
 
 		if(recover.isUsed()) {
-			Util.addErrorMessage("Código já utilizado.");
+			Util.addErrorMessage("This code was already used.");
 			return false;
 		}
 		
 		if(recover.getLimitDate().isBefore(LocalDateTime.now())) {
-			Util.addErrorMessage("Código expirado.");
+			Util.addErrorMessage("This code expired.");
 			return false;
 		}
 		
 		if (user == null) {
-			Util.addErrorMessage("Não foi encontrado esse email no sistema.");
+			Util.addErrorMessage("This email doens't exist.");
 			return false;
 		}
 		
-		System.out.println(user);
 		RecoverPasswordController.user = user;
 		recover.setUsed(true);
 		
@@ -158,19 +167,18 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 			repoRecover.commitTransaction();
 		} catch (RepositoryException e) {
 			repo.rollbackTransaction();
-			Util.addErrorMessage("Não foi possível atualizar a senha.");
+			Util.addErrorMessage("It was not possible to update the password. Try again.");
 			return false;
 		}
 		
-		Util.addInfoMessage("Usuário encontrado.");
+		Util.addInfoMessage("Welcome to reset the password, sir/lady.");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		Util.redirect("/lip/views/auth/new_password.xhtml");
 		return true;
 		
 	}
 	
 	public void saveNewPassword() {
-		System.out.println(user);
-		System.out.println(getPassword());
 		user.setPassword(getPassword());
 		Repository<User> repo = new Repository<User>();
 
@@ -178,12 +186,14 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 			repo.beginTransaction();
 			repo.save(user);
 			repo.commitTransaction();
-			Util.addInfoMessage("Senha atualizada com sucesso");
 			user = null;
 			clean();
+			Util.addInfoMessage("Password updated");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			Util.redirect("/lip/views/auth/login.xhtml");
 		} catch (RepositoryException e) {
 			repo.rollbackTransaction();
-			Util.addErrorMessage("Não foi possível atualizar a senha.");
+			Util.addErrorMessage("It was not possible to update the password. Try again.");
 		}
 	}
 	

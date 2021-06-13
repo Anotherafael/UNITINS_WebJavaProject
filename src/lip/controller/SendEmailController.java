@@ -50,10 +50,10 @@ public class SendEmailController implements Serializable {
 		try {
 			JakartaEmail email = new JakartaEmail(getToAddress(), getTitle(), getContent());
 			email.send();
-			Util.addInfoMessage("Email enviado com sucesso.");
+			Util.addInfoMessage("Email sent.");
 		} catch (Exception e) {
 			e.printStackTrace();
-			Util.addErrorMessage("Email não enviado");
+			Util.addErrorMessage("Email wasn't sent");
 		}
 		clean();
 	}

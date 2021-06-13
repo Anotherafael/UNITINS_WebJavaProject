@@ -15,7 +15,7 @@ import lip.util.Util;
 @Table(name = "\"users\"")
 public class User extends DefaultEntity<User>{
 
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 60)
 	private String nickname;
 	@Column(unique = true, nullable = false, length = 60)
 	private String email;
@@ -23,7 +23,7 @@ public class User extends DefaultEntity<User>{
 	private String password;
 	@Column(length = 60)
 	private String name;
-	@Column(unique=true, length = 14)
+	@Column(unique=true, length = 14, nullable = true)
 	private String cpf;
 	
 	@OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)

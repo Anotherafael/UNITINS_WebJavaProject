@@ -13,11 +13,13 @@
 				</div>
 				
 				<div class="social-icons">
-					<span class="ti-bell"></span>
+					<span class="ti-bell"></span	>
 					<span class="ti-comment"></span>
-					<a href="../auth/login.xhtml">
-						<div></div>
-					</a>
+					<h:form>
+					<div>
+					<p:commandButton icon="pi pi-power-off" styleClass="rounded-button ui-button-warning" actionListener="#{loginController.logout}"/>
+					</div>
+					</h:form>
 				</div>
 			</header>
 	</ui:insert>

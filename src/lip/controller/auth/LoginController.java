@@ -2,7 +2,6 @@ package lip.controller.auth;
 
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -28,22 +27,32 @@ public class LoginController implements Serializable {
 		EntityManager em = JPAUtil.getEntityManager();
 		TypedQuery<User> query = em.createQuery("from User u where u.email = :email and u.password = :password",
 				User.class);
-		
+
 		String email = getEmail();
 		String password = getPassword();
 		query.setParameter("email", email);
 		query.setParameter("password", Util.hash(password));
-		
+
 		try {
 			setUser(query.getSingleResult());
 			Session.getInstance().setAttribute("loggedInUser", user);
-			Util.redirect("/lip/views/user/index.xhtml");
+			Util.addInfoMessage("Welcome, " + user.getNickname() + "!");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			Util.redirect("/lip/views/music/index.xhtml");
 		} catch (javax.persistence.NoResultException e) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "User not found", null));
+			Util.addErrorMessage("User not found");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			Util.redirect("/lip/views/auth/login.xhtml");
 		}
+	}
+
+	public void logout() {
+		User user = (User) Session.getInstance().getAttribute("loggedInUser");
+		Util.addWarnMessage("Bye, " + user.getNickname() + "!");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		Session.getInstance().setAttribute("loggedInUser", null);
+		
+		Util.redirect("/lip/views/auth/login.xhtml");
 	}
 
 	public void clean() {

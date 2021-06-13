@@ -17,7 +17,6 @@
 						style="float:right;"></p:linkButton>
 				</div>
 				<h:form>
-					<p:growl id="growl" showDetail="true" />
 					<p:wizard backLabel="Return" nextLabel="Next" styleClass="wizard">
 						<p:tab id="tabDadosPrincipais" title="Dados Principais">
 							<p:messages />
@@ -47,9 +46,10 @@
 								<div class="input-box">
 									<p:outputLabel for="itEmail" styleClass="input-details"
 										value="Email" />
-									<p:inputText id="itEmail" type="text"
-										placeholder="Qual o email?"
-										value="#{userController.entity.email}" required="true" />
+									<p:inputText id="itEmail" type="text" placeholder="Qual o email?" value="#{userController.entity.email}" required="true"
+									validatorMessage="Email is not valid"> 
+										 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+									</p:inputText>
 								</div>
 								<div class="input-box">
 									<p:outputLabel for="pwd1" styleClass="input-details"

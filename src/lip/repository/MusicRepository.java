@@ -6,7 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import lip.model.Music;
+import lip.model.User;
 import lip.util.JPAUtil;
+import lip.util.Session;
 
 public class MusicRepository extends Repository<Music> {
 
@@ -31,5 +33,23 @@ public class MusicRepository extends Repository<Music> {
 			throw new RepositoryException("Database consult error");
 		}
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Music> findMusicByUser() throws RepositoryException {
+		
+		User user = (User) Session.getInstance().getAttribute("loggedInUser");
+		
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query = em.createQuery("SELECT m FROM Music m WHERE m.user = :user ORDER BY m.id ");
+			query.setParameter("user",  user);
+			
+			return (List<Music>) query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Database consult error");
+		}
+		
 	}
 }

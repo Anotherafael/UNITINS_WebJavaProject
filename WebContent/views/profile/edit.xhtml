@@ -12,7 +12,7 @@
 			<div class="container">
 				<div class="title">
 					Registration
-					<p:commandButton actionListener="#{userController.returnToIndex}"
+					<p:commandButton actionListener="#{profileController.returnToIndex}"
 						styleClass="rounded-button ui-button-warning" style="float:right;"
 						value="Voltar"></p:commandButton>
 				</div>
@@ -24,27 +24,27 @@
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Name" />
 									<p:inputText id="itName" type="text" placeholder="Qual o nome?"
-										value="#{userController.entity.name}" />
+										value="#{profileController.entity.name}" />
 								</div>
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Nickname" />
 									<p:inputText id="itNickname" type="text"
 										placeholder="Qual o nome fantasia?"
-										value="#{userController.entity.nickname}" />
+										value="#{profileController.entity.nickname}" />
 								</div>
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="CPF   " />
-									<p:inputMask id="itCpf" type="text" value="#{userController.entity.cpf}" mask="999.999.999-99"
-									validateMask="true" placeholder="Qual o CPF?">
+									<p:inputMask id="itCpf" type="text"
+										value="#{profileController.entity.cpf}" mask="999.999.999-99"
+										validateMask="true" placeholder="Qual o CPF?">
 										<f:validateLength minimum="14" />
 									</p:inputMask>
 								</div>
 								<div class="input-box">
 									<p:outputLabel styleClass="input-details" value="Email" />
-									<p:inputText id="itEmail" type="text" placeholder="Qual o email?" value="#{userController.entity.email}" 
-									validatorMessage="Email is not valid"> 
-										 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-									</p:inputText>
+									<p:inputText id="itEmail" type="text"
+										placeholder="Qual o email?"
+										value="#{profileController.entity.email}" />
 								</div>
 							</div>
 						</p:tab>
@@ -55,25 +55,25 @@
 										<p:outputLabel styleClass="input-details" value="Phone" />
 										<p:inputMask id="itNumber" type="text" mask="(99) 99999-9999"
 											placeholder="Qual o telefone?" required="false"
-											value="#{userController.phone.number}" />
+											value="#{profileController.phone.number}" />
 										<p:commandButton styleClass="btn-form" value="Add"
-											actionListener="#{userController.addContact}"
+											actionListener="#{profileController.addContact}"
 											process="@this itNumber" update="dtContact" />
 									</div>
 									<div class="input-box">
 										<p:outputLabel styleClass="input-details" value="Email" />
 										<p:inputText id="itContactEmail" type="text" required="false"
 											placeholder="Qual o email?"
-											value="#{userController.email.address}">
+											value="#{profileController.email.address}">
 										</p:inputText>
 										<p:commandButton value="Add"
-											actionListener="#{userController.addContact}"
+											actionListener="#{profileController.addContact}"
 											process="@this itContactEmail" update="dtContact" />
 									</div>
 								</div>
 								<div class="data-table">
 									<p:dataTable id="dtContact"
-										value="#{userController.entity.listContacts}" var="obj">
+										value="#{profileController.entity.listContacts}" var="obj">
 
 										<p:column>
 											<f:facet name="header">Contato</f:facet>
@@ -83,7 +83,7 @@
 										<p:column>
 											<f:facet name="header">Ação</f:facet>
 											<p:commandButton value="Remover"
-												actionListener="#{userController.removeContact(obj)}"
+												actionListener="#{profileController.removeContact(obj)}"
 												process="@this" update="dtContact" />
 										</p:column>
 
@@ -91,7 +91,7 @@
 								</div>
 
 							<p:commandButton style="float:right;" styleClass="rounded-button"
-								value="Submit" actionListener="#{userController.save}"
+								value="Submit" actionListener="#{profileController.save}"
 								process="form-user" update="form-user" />
 						</p:tab>
 

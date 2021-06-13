@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap')
+	;
 
 :root {
 	--main-color: #262322;
@@ -24,7 +26,7 @@
 	z-index: 100;
 	background: var(--main-color);
 	color: #fff;
-	overflow-y: auto; 
+	overflow-y: auto;
 }
 
 .sidebar-header {
@@ -91,7 +93,7 @@ header {
 	margin-right: 1.2rem;
 }
 
-.social-icons span, .social-icons div{
+.social-icons span, .social-icons div {
 	margin-left: 1.2rem;
 }
 
@@ -153,7 +155,7 @@ body .ui-button.ui-button-text-icon-right .ui-icon {
 
 form .details .input-box {
 	margin-bottom: 15px;
-	width: calc(100% / 2);
+	width: calc(100%/ 2);
 }
 
 .details .inputs-box .input-details {
@@ -184,20 +186,37 @@ form .details .input-box {
 	transition: all 0.3 ease;
 }
 
-.details .input-box input:focus,
-.details .input-box input:valid{
-	border-color: var(--color-dark);
+.details .input-box input:focus, .details .input-box input:valid {
+	border-color: var(- -color-dark);
 }
 
-.details .input-box .select-one,
-.details .input-box .select-one:valid{
-	border-color: var(--color-dark);
+.details .input-box .select-one, .details .input-box .select-one:valid {
+	border-color: var(- -color-dark);
 }
 
 .data-table {
-	margin: 20px 0 12px 0; 
+	margin: 20px 0 12px 0;
 }
 
 body .ui-button.ui-button-text-icon-right .ui-button-text {
 	padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+main .card-profile .card-details {
+	justify-content: space-between; 
+	display: flex; 
+	flex-direction: column;
+	align-items: center; 
+	min-height: 200px;
+}
+
+main .card-profile .card-contacts {
+	font-size: 1.25rem;
+	text-align: center; 
+	padding-top: 2rem;
+	min-height: 200px;
+}
+
+main .card-profile .card-details .card-text {
+	font-size: 1.25rem;
 }

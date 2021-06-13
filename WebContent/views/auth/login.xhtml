@@ -7,6 +7,7 @@
 	template="/resources/template/auth_template.xhtml">
 
 	<ui:define name="content">
+		<p:growl id="growl"/>
 		<div class="login-container">
 			<p class="title">Bem-vindo!</p>
 			<div class="separator"></div>
@@ -14,7 +15,6 @@
 				para ter acesso a todos os nossos serviços</p>
 
 			<h:form class="login-form">
-				<p:growl id="growl" showDetail="true" />
 				<div class="form-control">
 					<span class="ui-input-icon-left"> <i class="ti-user" /> <p:inputText
 							placeholder="Email" value="#{loginController.email}"
@@ -29,8 +29,12 @@
 				<p:commandButton styleClass="rounded-button submit" value="Login"
 					actionListener="#{loginController.singIn}"></p:commandButton>
 			</h:form>
+			<p:linkButton outcome="register"
+				styleClass="ui-button-flat reset" value="Registrar-se"></p:linkButton>
 			<p:linkButton outcome="reset_password"
 				styleClass="ui-button-flat reset" value="Resetar Senha"></p:linkButton>
+			<p:linkButton href="../home/index.xhtml"
+				styleClass="ui-button-flat reset" value="Voltar ao Home"></p:linkButton>
 		</div>
 	</ui:define>
 </ui:composition>

@@ -1,5 +1,6 @@
 package lip.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -7,6 +8,7 @@ import javax.persistence.Table;
 @Table(name = "\"phones\"")
 public class Phone extends Contact {
 
+	@Column(length = 20, nullable = false)
 	private String number;
 
 	public String getNumber() {

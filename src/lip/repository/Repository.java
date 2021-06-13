@@ -38,7 +38,7 @@ public class Repository<T extends DefaultEntity<? super T>>  {
 			throw new RepositoryException("Save doens't work. Try restart the page");
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Save error");
+			throw new RepositoryException("Error on saving");
 		} 
 	
 	}
@@ -50,7 +50,7 @@ public class Repository<T extends DefaultEntity<? super T>>  {
 			getEntityManager().remove(t);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Delete error ");
+			throw new RepositoryException("Error on removing");
 		} 
 	
 	}
@@ -68,7 +68,7 @@ public class Repository<T extends DefaultEntity<? super T>>  {
 			getEntityManager().getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new RepositoryException("Commit error");
+			throw new RepositoryException("Error on database");
 		}
 	}
 	

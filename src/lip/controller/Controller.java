@@ -24,7 +24,6 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 			repo.beginTransaction();
 			setEntity(repo.save(getEntity()));
 			repo.commitTransaction();
-			Util.addInfoMessage("Saved with success");
 		} catch (RepositoryException e) {
 			repo.rollbackTransaction();
 			e.printStackTrace();
@@ -37,7 +36,6 @@ public abstract class Controller <T extends DefaultEntity<? super T>> implements
 		try {
 			repo.beginTransaction();
 			repo.remove(entity);
-			Util.addInfoMessage("Deleted with success");
 			repo.commitTransaction();
 		} catch (RepositoryException e) {
 			repo.rollbackTransaction();

@@ -12,7 +12,7 @@
 				<div class="card">
 					<h:form>
 						<p:accordionPanel dynamic="true" cache="true" multiple="true"
-							widgetVar="ondemand" value="#{postController.postList}" var="obj">
+							widgetVar="ondemand" value="#{postIndexController.postList}" var="obj">
 							<p:tab titleStyleClass="title tab-title" title="#{obj.title}">
 								<p class="p-m-0">#{obj.created_at} #{obj.content}</p>
 							</p:tab>

@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/admin_template.xhtml">
+
+	<ui:define name="content">
+
+		<main>
+			<div class="container">
+				<h:form>
+				<div class="title">
+					Profile
+					<p:commandButton icon="pi pi-pencil" styleClass="rounded-button ui-button-success" style="float: right" actionListener="#{profileController.edit}" 
+					process="@form" update="@form"></p:commandButton>
+				</div>
+					<div class="card-profile">
+						<div class="card-details">
+							<div class="card-text"> #{profileController.entity.name} </div>
+							<div class="card-text"> #{profileController.entity.nickname} </div>
+							<div class="card-text"> #{profileController.entity.email} </div>
+							<div class="card-text"> #{profileController.entity.cpf} </div>
+						</div>
+						<div class="card-contacts"> 
+							<div class="card">
+								<h5>Contatos</h5>
+								<p:chronoline value="#{profileController.entity.listContacts}" var="obj" align="alternate">
+							        #{obj}
+							    </p:chronoline>
+							</div>
+						</div>
+					</div>
+					
+					
+				</h:form>
+			</div>
+		</main>
+	</ui:define>
+
+</ui:composition>

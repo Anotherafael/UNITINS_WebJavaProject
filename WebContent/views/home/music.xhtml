@@ -8,25 +8,28 @@
 
 	<ui:define name="content">
 		<main>
-			<div class="content">
-				<p:dataGrid value="#{musicController.musicList}" var="obj" rows="12" columns="4"
-					style="justify-content: center; align-items: center; text-align:center;">
-					<p:card style="width: 22.5em; text-align:center; justify-content: center; align-items: center;">
-						<f:facet name="header">
-							<img src="/lip/views/img-music?id=#{obj.id}.png" />
-						</f:facet>
-						<f:facet name="title">
-					    #{obj.title}
-						</f:facet>
-						<div class="links">
-							<i class="pi pi-cloud" style="font-size: 30px"/>
-							<i class="pi pi-youtube" style="font-size: 30px"/>
-							<i class="pi pi-question" style="font-size: 30px"/>
-							<i class="pi pi-info-circle" style="font-size: 30px"/>
-						</div>
-					</p:card>
-				</p:dataGrid>
-			</div>
+			<h:form>
+				<div class="content">
+					<p:dataGrid value="#{musicIndexController.musicList}" var="obj"
+						columns="4" style="justify-content: space-between; align-items: center; text-align:center;">
+						<p:card
+							style="width: 22.5em; text-align:center; justify-content: center; align-items: center;">
+							<f:facet name="header">
+								<img src="/lip/views/img-music?id=#{obj.id}.png" />
+							</f:facet>
+							<f:facet name="title">
+					   			#{obj.title}
+							</f:facet>
+							<div class="links">
+								<i class="pi pi-cloud" style="font-size: 30px" /> 
+								<i class="pi pi-youtube" style="font-size: 30px" /> 
+								<i class="pi pi-question" style="font-size: 30px" />
+								<p:commandButton action="#{musicInfoController.musicInfo(obj)}" icon="pi pi-info"></p:commandButton>
+							</div>
+						</p:card>
+					</p:dataGrid>
+				</div>
+			</h:form>
 		</main>
 	</ui:define>
 </ui:composition>

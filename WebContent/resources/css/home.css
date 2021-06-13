@@ -6,6 +6,7 @@
 	--red: #E85A4F;
 	--light-orange: #8F8F7F5;
 	--gray: #8E8D8A;
+	--left-card: #D8C4A5;
 }
 
 * {
@@ -60,7 +61,6 @@ main {
 	align-items: center;
 	background: var(--light-yellow);
 	padding: 0rem 10rem 0rem 10rem;
-	min-height: 900px;
 }
 
 main .tab-title {
@@ -68,6 +68,8 @@ main .tab-title {
 }
 
 main .content {
+	width: 100%;
+	min-height: 830px;
 	padding-top: 5rem;
 	padding-bottom: 5rem;
 }
@@ -79,6 +81,20 @@ main .content .links {
 
 main .content .links i {
 	padding: 0px 8px 0px 8px;
+}
+
+main .content .left-card {
+	width: 500px;
+	height: 500px;
+	background: var(--left-card); 
+	position: absolute;
+}
+
+main .content .right-card {
+	right: 200px;
+	width: 50%;
+	background: var(--pink); 
+	position: absolute;
 }
 
 body .ui-datagrid .ui-datagrid-content {

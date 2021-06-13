@@ -27,15 +27,15 @@ public class SecurityFilter implements Filter {
 			pagesWithPermissions = new ArrayList<String>();
 			pagesWithPermissions.add("/lip/views/user/index.xhtml");
 			pagesWithPermissions.add("/lip/views/user/form.xhtml");
+			pagesWithPermissions.add("/lip/views/user/edit.xhtml");
+			pagesWithPermissions.add("/lip/views/profile/index.xhtml");
+			pagesWithPermissions.add("/lip/views/profile/edit.xhtml");
 			pagesWithPermissions.add("/lip/views/music/index.xhtml");
 			pagesWithPermissions.add("/lip/views/music/form.xhtml");
 			pagesWithPermissions.add("/lip/views/post/index.xhtml");
 			pagesWithPermissions.add("/lip/views/post/form.xhtml");
 			pagesWithPermissions.add("/lip/views/auth/login.xhtml");
-			pagesWithPermissions.add("/lip/views/home/index.xhtml");
-			pagesWithPermissions.add("/lip/views/home/music.xhtml");
-			pagesWithPermissions.add("/lip/views/home/music_info.xhtml");
-			pagesWithPermissions.add("/lip/views/img-music");
+			pagesWithPermissions.add("/lip/views/sendemail/index.xhtml");
 		}
 		return pagesWithPermissions;
 	}
@@ -56,8 +56,8 @@ public class SecurityFilter implements Filter {
 		if (url.equals("/lip/views/auth/login.xhtml") || url.equals("/lip/views/home/index.xhtml")
 				|| url.equals("/lip/views/home/music.xhtml") || url.equals("/lip/views/home/music_info.xhtml")
 				|| url.equals("/lip/views/auth/new_password.xhtml")
-				|| url.equals("/lip/views/auth/reset_password.xhtml")
-				|| url.equals("/lip/views/auth/validation.xhtml")) {
+				|| url.equals("/lip/views/auth/reset_password.xhtml") || url.equals("/lip/views/auth/register.xhtml")
+				|| url.equals("/lip/views/auth/validation.xhtml") || url.equals("/lip/views/img-music" )) {
 			chain.doFilter(request, response);
 			return;
 		}

@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	template="/resources/template/home_template.xhtml">
+
+	<ui:define name="content">
+		<main>
+			<div class="content">
+				
+				<div class="left-card">
+					<div>
+						#{musicInfoController.entity.title}
+					</div>
+					<div>
+						<img src="/lip/views/img-music?id=#{musicInfoController.entity.id}.png" />
+					</div>
+				</div>
+				
+				<div class="right-card">
+					#{musicInfoController.entity.lyrics}
+				</div>
+				
+			</div>
+		</main>
+	</ui:define>
+</ui:composition>

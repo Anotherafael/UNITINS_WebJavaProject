@@ -10,8 +10,10 @@ import javax.inject.Named;
 
 import lip.model.Post;
 import lip.model.PostType;
+import lip.model.User;
 import lip.repository.PostRepository;
 import lip.repository.RepositoryException;
+import lip.util.Session;
 import lip.util.Util;
 
 @Named
@@ -33,10 +35,11 @@ public class PostController extends Controller<Post> {
 			postList = new ArrayList<Post>();
 			PostRepository repo = new PostRepository();
 			try {
-				setPostList(repo.findAll());
+				setPostList(repo.findPostByUser());
 			} catch (RepositoryException e) {
 				e.printStackTrace();
-				Util.addErrorMessage("Error on trying to find all.");
+				Util.addErrorMessage("Error on trying to find posts.");
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 				setPostList(null);
 			}
 		}
@@ -55,19 +58,27 @@ public class PostController extends Controller<Post> {
 	public Post getEntity() {
 		if (entity == null ) {
 			entity = new Post();
+			entity.setUser(new User());
 		}
 		return entity;
 	}
 	
 	@Override
 	public void save() {
+		User user = (User) Session.getInstance().getAttribute("loggedInUser");
+		System.out.println(user);
+		entity.setUser(user);
 		super.save();
+		Util.addInfoMessage("Post saved");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		Util.redirect("/lip/views/post/index.xhtml");
 	}
 	
 	@Override
 	public void remove(Post entity) {
 		super.remove(entity);
+		Util.addWarnMessage("Post removed");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		Util.redirect("/lip/views/post/index.xhtml");
 	}
 	

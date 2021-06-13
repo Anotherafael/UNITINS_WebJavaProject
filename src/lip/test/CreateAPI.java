@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import lip.model.Music;
+import lip.model.User;
 
 public class CreateAPI {
 
@@ -14,12 +14,15 @@ public class CreateAPI {
 			EntityManagerFactory emf = Persistence.createEntityManagerFactory("lip");
 			EntityManager em = emf.createEntityManager();
 
-			Music music = new Music();
-			music.setTitle("Desenho");
-			music.setLyrics("Letra insana de bom, meu bom.");
+			User user = new User();
+			user.setName("Rafael");
+			user.setEmail("rafael@gmail.com");
+			user.setPassword("123456");
+			user.setNickname("Anotherafael");
+			user.setCpf("000.000.000-00");
 			
 			em.getTransaction().begin();
-			em.persist(music);
+			em.persist(user);
 			em.getTransaction().commit();
 			
 			System.out.println("Ready!");			

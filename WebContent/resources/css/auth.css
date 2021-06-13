@@ -119,7 +119,7 @@ button {
     font-size: 1.1em;
 }
 
-button.submit {
+button.submit{
     color: #fff;
     padding: 14px 64px;
     margin: 20px auto;
@@ -136,6 +136,10 @@ button.submit:hover {
 
 button.reset {
 	color: #000;
+}
+
+.hidden {
+	display: none;
 }
 
 /* ----  Responsiveness   ----  */

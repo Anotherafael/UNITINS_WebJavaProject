@@ -12,24 +12,41 @@ import lip.model.Contact;
 import lip.model.Email;
 import lip.model.Phone;
 import lip.model.User;
-import lip.repository.RepositoryException;
-import lip.repository.UserRepository;
+import lip.util.Session;
 import lip.util.Util;
 
 @Named
 @ViewScoped
-public class UserController extends Controller<User> {
+public class ProfileController extends Controller<User> {
 
-	static final long serialVersionUID = -7139140939538307737L;
+	private static final long serialVersionUID = 5150422400208707191L;
+	
+	private List<String> list;
 
-	private List<User> userList;
 	private Phone phone;
 	private Email email;
 
-	public UserController() {
-		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-		flash.keep("flashUser");
-		entity = (User) flash.get("flashUser");
+	public List<String> getList() {
+		if (list == null) {
+			list = new ArrayList<String>();
+			list.add(getEntity().getName());
+			list.add(getEntity().getEmail());
+			list.add(getEntity().getNickname());
+		}
+		return list;
+	}
+
+	public void setList(List<String> list) {
+		this.list = list;
+	}
+
+	@Override
+	public User getEntity() {
+		if (entity == null) {
+			User user = (User) Session.getInstance().getAttribute("loggedInUser");
+			entity = user;
+		}
+		return entity;
 	}
 
 	public Phone getPhone() {
@@ -89,63 +106,26 @@ public class UserController extends Controller<User> {
 
 	public void removeContact(Contact contact) {
 		getEntity().getListContacts().remove(contact);
-	}
-
-	public List<User> getUserList() {
-		if (userList == null) {
-			userList = new ArrayList<User>();
-			UserRepository repo = new UserRepository();
-			try {
-				setUserList(repo.findAll());
-			} catch (RepositoryException e) {
-				e.printStackTrace();
-				Util.addErrorMessage("Error on trying to find users.");
-				setUserList(null);
-			}
-		}
-		return userList;
-	}
-
-	public void setUserList(List<User> listaUsuario) {
-		this.userList = listaUsuario;
-	}
-
-	@Override
-	public User getEntity() {
-		
-		if (entity == null) {
-			entity = new User();
-		}
-		return entity;
+		Util.addWarnMessage("Contact removed");
 	}
 
 	@Override
 	public void save() {
 		super.save();
-		Util.addInfoMessage("User saved");
+		Util.addInfoMessage("Updated with success");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-		Util.redirect("/lip/views/user/index.xhtml");
-	}
-	
-	@Override
-	public void remove(User user) {
-		super.remove(user);
-		Util.addInfoMessage("User removed");
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-		Util.redirect("/lip/views/user/index.xhtml");
+		Util.redirect("/lip/views/profile/index.xhtml");
 	}
 
 	public void returnToIndex() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.clear();
-		Util.redirect("/lip/views/user/index.xhtml");
+		Util.redirect("/lip/views/profile/index.xhtml");
 	}
 
-	@Override
-	public void edit(User entity) {
+	public void edit() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-		flash.put("flashUser", entity);
-		Util.redirect("/lip/views/user/edit.xhtml");
+		flash.put("flashUser", getEntity());
+		Util.redirect("/lip/views/profile/edit.xhtml");
 	}
-
 }

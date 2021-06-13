@@ -1,0 +1,68 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ph="http://primefaces.org/harmony"
+	template="/resources/template/auth_template.xhtml">
+
+	<ui:define name="content">
+		<div class="login-container">
+			<p class="title">Bem-vindo!</p>
+			<div class="separator"></div>
+			<p class="welcome-message">Por favor, informe os dados a serem
+				cadastrados.</p>
+
+			<h:form class="login-form">
+			<p:growl id="growl" />
+				<div class="form-control">
+					<p:outputLabel for="itName" value="Name" styleClass="hidden"></p:outputLabel>
+					<span class="ui-input-icon-left"> 
+						<i class="ti-user" /> 
+						<p:inputText id="itName" placeholder="Qual seu nome?" value="#{registerController.entity.name}" required="true" />
+					</span>
+				</div>
+				<div class="form-control">
+					<p:outputLabel for="itNickname" value="Nickname" styleClass="hidden"></p:outputLabel>
+					<span class="ui-input-icon-left"> 
+						<i class="ti-user" /> 
+						<p:inputText id="itNickname" placeholder="Qual o seu nome fantasia" value="#{registerController.entity.nickname}" required="true">
+						</p:inputText>
+					</span>
+				</div>
+				<div class="form-control">
+					<p:outputLabel for="itEmail" value="Email" styleClass="hidden"></p:outputLabel>
+					<span class="ui-input-icon-left"> 
+						<i class="ti-user" /> 
+						<p:inputText id="itEmail" placeholder="Qual o seu email?" value="#{registerController.entity.email}" required="true"
+						validatorMessage="Email is not valid">
+							 <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+						</p:inputText>
+					</span>
+				</div>
+				<div class="form-control">
+					<p:outputLabel for="pwd1" value="Senha" styleClass="hidden"></p:outputLabel>
+					<span class="ui-input-icon-left"> 
+					<i class="ti-lock" /> 
+					<p:password id="pwd1" match="pwd2" feedback="true" label="Senha" required="true" placeholder="Digite a senha">
+						<f:validateLength minimum="6"/>
+					</p:password>
+					</span>
+				</div>
+				<div class="form-control">
+					<p:outputLabel for="pwd2" value="Confirmação de Senha" styleClass="hidden"></p:outputLabel>
+					<span class="ui-input-icon-left"> 
+						<i class="ti-lock" /> 
+						<p:password id="pwd2" value="#{registerController.entity.password}" match="pwd2" label="Confirmação de Senha" required="true" placeholder="Repita a senha">
+							<f:validateLength minimum="6" />
+						</p:password>
+					</span>
+				</div>
+					<p:commandButton style="float:right;" styleClass="rounded-button submit" value="Submit" actionListener="#{registerController.save}" 
+					process="@form" update="@form" />
+			</h:form>
+			<p:linkButton outcome="login" styleClass="ui-button-flat reset"
+				value="Retornar ao Login"></p:linkButton>
+		</div>
+	</ui:define>
+</ui:composition>

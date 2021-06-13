@@ -80,14 +80,14 @@ public class UserRepository extends Repository<User> {
 		jpql.append("FROM ");
 		jpql.append(" User u, RecoverPassword r ");
 		jpql.append("WHERE ");
-		jpql.append(" r.code = :code ");
+		jpql.append(" r.code = :code AND u.id = r.user");
 		
 		Query query = em.createQuery(jpql.toString());
 		query.setParameter("code", code);
 		
 		User user = null;
 		try {
-			user = (User) query.getSingleResult();
+			user = (User)(query.getSingleResult());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

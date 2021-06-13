@@ -16,8 +16,10 @@ import org.primefaces.model.file.UploadedFile;
 import lip.model.Link;
 import lip.model.Music;
 import lip.model.Platform;
+import lip.model.User;
 import lip.repository.MusicRepository;
 import lip.repository.RepositoryException;
+import lip.util.Session;
 import lip.util.Util;
 
 @Named
@@ -109,10 +111,11 @@ public class MusicController extends Controller<Music> {
 			musicList = new ArrayList<Music>();
 			MusicRepository repo = new MusicRepository();
 			try {
-				setMusicList(repo.findAll());
+				setMusicList(repo.findMusicByUser());
 			} catch (RepositoryException e) {
 				e.printStackTrace();
-				Util.addErrorMessage("Error on trying to find all.");
+				Util.addErrorMessage("Error on trying to find musics.");
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 				setMusicList(null);
 			}
 		}
@@ -125,10 +128,13 @@ public class MusicController extends Controller<Music> {
 
 	@Override
 	public void save() {
+		User user = (User) Session.getInstance().getAttribute("loggedInUser");
+		entity.setUser(user);
 		if (fotoInputStream == null) {
 			super.save();
 			clean();
-			Util.addInfoMessage("Operação realizada com sucesso.");
+			Util.addInfoMessage("Music saved without thumb.");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			Util.redirect("/lip/views/music/index.xhtml");
 			return;
 		};
@@ -136,16 +142,19 @@ public class MusicController extends Controller<Music> {
 		try {
 			repo.beginTransaction();
 			setEntity(repo.save(getEntity()));
-			if (! Util.saveImageUsuario(fotoInputStream, "png", getEntity().getId())) 
-				throw new RepositoryException("Erro ao salvar. Não foi possível salvar a imagem do usuário.");
+			if (! Util.saveImageUsuario(fotoInputStream, "png", getEntity().getId())) {
+				throw new RepositoryException("Error on saving image");				
+			}
 			repo.commitTransaction();
-			Util.addInfoMessage("Operação realizada com sucesso.");
 			clean();
+			Util.addInfoMessage("Music saved with thumb.");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			Util.redirect("/lip/views/music/index.xhtml");
 		} catch (RepositoryException e) {
 			repo.rollbackTransaction();
-			System.out.println("Erro ao salvar.");
 			e.printStackTrace();
-			Util.addErrorMessage(e.getMessage());
+			Util.addErrorMessage("Error on saving");
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		}
 	}
 	
@@ -165,9 +174,9 @@ public class MusicController extends Controller<Music> {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			Util.addInfoMessage("Upload realizado com sucesso.");
+			Util.addInfoMessage("Image's upload was a sucess.");
 		} else {
-			Util.addErrorMessage("O tipo da image deve ser png.");
+			Util.addErrorMessage("Image must be in .PNG");
 		}
 
 	}
@@ -224,6 +233,7 @@ public class MusicController extends Controller<Music> {
 	public Music getEntity() {
 		if (entity == null) {
 			entity = new Music();
+			entity.setUser(new User());
 		}
 		return entity;
 	}
@@ -231,6 +241,7 @@ public class MusicController extends Controller<Music> {
 	@Override
 	public void remove(Music entity) {
 		super.remove(entity);
+		Util.addWarnMessage("Music removed");;
 		Util.redirect("/lip/views/music/index.xhtml");
 	}
 

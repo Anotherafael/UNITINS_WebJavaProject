@@ -17,7 +17,6 @@
 						style="float:right;"></p:linkButton>
 				</div>
 				<h:form enctype="multipart/form-data">
-					<p:growl id="growl" />
 					<p:wizard backLabel="Return" nextLabel="Next" styleClass="wizard" >
 
 						<p:tab id="tabDadosMusica" title="Dados Principais">
@@ -31,13 +30,6 @@
 										value="#{musicController.entity.title}" required="true" />
 								</div>
 								<div class="input-box">
-									<p:outputLabel for="lyrics" styleClass="input-details"
-										value="Lyrics" />
-									<p:inputText id="lyrics" type="text"
-										placeholder="Qual letra da música?"
-										value="#{musicController.entity.lyrics}" required="true" />
-								</div>
-								<div class="input-box">
 									<h:form enctype="multipart/form-data">
 										<p:fileUpload listener="#{musicController.upload}"
 											label="#{musicController.nomeFoto}" mode="advanced"
@@ -48,6 +40,25 @@
 								</div>
 							</div>
 						</p:tab>
+						
+						<p:tab id="tabLyrics" title="Lyrics">
+						
+							<div class="input-box" style="width: 100%;">
+								<div>
+									<p:outputLabel for="content" styleClass="input-details"
+										value="Content" />
+								</div>
+								<div>
+									<p:inputTextarea id="content" style="width: 49%;" placeholder="Qual o letra?" rows="30" counter="display" maxlength="500" 
+									counterTemplate="{0} characters remaining." value="#{musicController.entity.lyrics}" required="true"/>
+								</div>
+								<div>
+			        				<h:outputText id="display" class="p-d-block" />
+								</div>
+							</div>
+							
+						</p:tab>
+						
 						<p:tab id="tabLinks" title="Links">
 							<div class="details">
 								<div class="input-box">
