@@ -2,6 +2,7 @@ package lip.model;
 
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lip.util.DefaultEntity;
+import lip.util.Util;
 
 @Entity
 @Table(name = "\"musics\"")
@@ -17,10 +19,10 @@ public class Music extends DefaultEntity<Music>{
 
 	@Column(nullable = false, length = 50)
 	private String title;
-	@Column(nullable = false, length = 500)	
+	@Column(nullable = false, length = 1000)	
 	private String lyrics;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private User user;
 	
 	@OneToMany(mappedBy="music", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -93,5 +95,53 @@ public class Music extends DefaultEntity<Music>{
 	@Override
 	public String toString() {
 		return "[Title: " + getTitle() + "]";
+	}
+	
+	public void youtube() {		
+		for (Link link : listLinks) {
+			if (link.getPlatform().equals(Platform.YOUTUBE)) {
+				Util.redirect(link.getUrl());
+				return;
+			}
+		}
+		Util.addWarnMessage("Não foi possível achar o link");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		return;
+	}
+	
+	public void instagram() {
+		for (Link link : listLinks) {
+			if (link.getPlatform().equals(Platform.INSTAGRAM)) {
+				Util.redirect(link.getUrl());
+				return;
+			}
+		}
+		Util.addWarnMessage("Não foi possível achar o link");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		return;
+	}
+	
+	public void soundcloud() {
+		for (Link link : listLinks) {
+			if (link.getPlatform().equals(Platform.SOUNDCLOUD)) {
+				Util.redirect(link.getUrl());
+				return;
+			}
+		}
+		Util.addWarnMessage("Não foi possível achar o link");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		return;
+	}
+	
+	public void spotify() {
+		for (Link link : listLinks) {
+			if (link.getPlatform().equals(Platform.SPOTIFY)) {
+				Util.redirect(link.getUrl());
+				return;
+			}
+		}
+		Util.addWarnMessage("Não foi possível achar o link");
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		return;
 	}
 }

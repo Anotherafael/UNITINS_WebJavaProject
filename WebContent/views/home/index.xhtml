@@ -11,12 +11,51 @@
 			<div class="content">
 				<div class="card">
 					<h:form>
-						<p:accordionPanel dynamic="true" cache="true" multiple="true"
-							widgetVar="ondemand" value="#{postIndexController.postList}" var="obj">
-							<p:tab titleStyleClass="title tab-title" title="#{obj.title}">
-								<p class="p-m-0">#{obj.created_at} #{obj.content}</p>
-							</p:tab>
-						</p:accordionPanel>
+					<div style="justify-content: center; align-items: center; display: flex; align-content: center;">
+						<div>
+							<p:autoComplete id="user" value="#{postIndexController.selectedUser}" placeholder="Pesquisar por artista" forceSelection="true"
+							dropdown="true" minQueryLength="1" moreText="There are more artists" maxResults="4" var="obj" itemLabel="#{obj.nickname}" 
+							itemValue="#{obj}" completeMethod="#{postIndexController.users}" scrollHeight="250" inputStyle="width: 250px"> 
+							</p:autoComplete>
+						</div>
+						<div style="padding-left: 20px;">
+							<p:selectOneMenu id="post-type" value="#{postIndexController.selectedPostType}" required="false">
+								<f:selectItem itemLabel="Qualquer um"/>
+								<f:selectItems value="#{postIndexController.postTypeList}" var="obj" itemValue="#{obj}" itemLabel="#{obj.label}" />
+							</p:selectOneMenu>
+						</div>
+						<div style="padding-left: 20px;">
+							<p:commandButton value="Search" update="posts" action="#{postIndexController.search}"></p:commandButton>
+						</div>
+					</div>
+					<div style="padding-top: 20px;">
+						<p:dataScroller id="posts" value="#{postIndexController.postList}" var="obj" chunkSize="5" style="background-color: #E98074;">
+				
+				
+				            <div>
+				            	<div class="single-post" style="background-color: #E98074;">
+				            		<div class="post-title">
+				            			<div class="title">
+											<strong>#{obj.postType.label}</strong> |
+											#{obj.title}
+				            			</div>
+				            		</div>
+				            		<div class="post-content">
+				            			<div class="text">
+											<p class="p-m-0">#{obj.content}</p>
+				            			</div>
+				            		</div>
+				            	</div>
+				            </div>
+				            
+				            <f:facet name="loader">
+				            	<div style="padding-top: 20px;">
+				                	<p:commandButton type="button" value="More" icon="pi pi-refresh"/>
+				            	</div>
+				            </f:facet>
+				
+				        </p:dataScroller>
+					</div>
 					</h:form>
 				</div>
 			</div>

@@ -18,6 +18,11 @@
 	box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    min-height: 100%;
+}
+
 header {
 	top: 0;
 	z-index: 100;
@@ -42,11 +47,17 @@ header ul li {
 
 header ul li a {
 	color: rgba(142, 141, 138, 1);
-	
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	background: var(--light-yellow);
+	min-height: 100%;
 }
 
 footer {
-	bottom: 0;
+	margin-top: auto;
 	z-index: 100;
 	width: 100%;
 	background: var(--red);
@@ -56,10 +67,13 @@ footer {
 	align-items: center;
 }
 
+footer .menu-items{
+	color: #FFE4E2;
+}
+
 main {
-	justify-content: center;
+	justify-content: center;	
 	align-items: center;
-	background: var(--light-yellow);
 	padding: 0rem 10rem 0rem 10rem;
 }
 
@@ -69,7 +83,6 @@ main .tab-title {
 
 main .content {
 	width: 100%;
-	min-height: 830px;
 	padding-top: 5rem;
 	padding-bottom: 5rem;
 }
@@ -83,20 +96,93 @@ main .content .links i {
 	padding: 0px 8px 0px 8px;
 }
 
-main .content .left-card {
-	width: 500px;
-	height: 500px;
-	background: var(--left-card); 
-	position: absolute;
-}
-
-main .content .right-card {
-	right: 200px;
-	width: 50%;
-	background: var(--pink); 
-	position: absolute;
-}
-
 body .ui-datagrid .ui-datagrid-content {
 	background: none;
+	border: none;
+}
+
+body .ui-commandlink:hover, body .ui-link:hover {
+    color: var(--gray);
+    text-decoration: none;
+}
+body .ui-commandlink, body .ui-link {
+    color: var(--gray);
+    transition: none;
+}
+body .ui-widget {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+body .ui-datascroller .ui-datascroller-content {
+    border: none;
+    background: var(--light-yellow);
+    color: white;
+    padding: 1rem;
+}
+
+.post-title {
+	background-color: #D8C4A5; 
+	display: inline-block; 
+	border: 1px black solid; 
+	margin-left: 20px; 
+	margin-bottom: 10px;
+}
+
+.post-title .title {
+	color: #525252; 
+	margin: 10px 10px 10px 10px; 
+	justify-content: center; 
+	text-align: center;
+}
+
+.post-content {
+	width: 100%; 
+	justify-content: center; 
+	align-items: center;
+}
+
+.post-content .text {
+	color: #FFE4E2; 
+	margin: 10px 50px 20px 50px;
+	padding-bottom: 20px;
+}
+
+body .ui-card {
+	background: #D6C9B6;
+}
+
+body .ui-card .ui-card-body {
+	padding: 0rem;
+}
+
+.card-music {
+	width: 30em; 
+	text-align:center; 
+	justify-content: center; 
+	align-items: center;
+}
+
+.right-card {
+	background: #E98074; 
+	margin-left: 20px;
+	width: 100%;
+}
+
+.right-card .text {
+	color: #FFE4E2; 
+	padding: 25px 25px 0px 25px;
+}
+#lyrics {
+	width: 100%; 
+	text-align: center;
+	background: var(--pink);
+	border: none;
+	color: #FFE4E2;  
+	font-size: 1.2rem;
+}
+
+body .ui-state-disabled {
+	opacity: 1;
 }

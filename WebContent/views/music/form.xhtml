@@ -49,7 +49,7 @@
 										value="Content" />
 								</div>
 								<div>
-									<p:inputTextarea id="content" style="width: 49%;" placeholder="Qual o letra?" rows="30" counter="display" maxlength="500" 
+									<p:inputTextarea id="content" style="width: 49%;" placeholder="Qual o letra?" rows="25" counter="display" maxlength="1000" 
 									counterTemplate="{0} characters remaining." value="#{musicController.entity.lyrics}" required="true"/>
 								</div>
 								<div>
@@ -62,41 +62,41 @@
 						<p:tab id="tabLinks" title="Links">
 							<div class="details">
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Instagram" />
+									<p:outputLabel styleClass="input-details" value="Instagram" rendered="#{musicController.hasInstagram()}"/>
 									<p:inputText id="itInstagram" type="text"
-										placeholder="Qual o link?"
+										placeholder="Qual o link?" rendered="#{musicController.hasInstagram()}"
 										value="#{musicController.instagram.url}" />
-									<p:commandButton styleClass="btn-form" value="Add"
+									<p:commandButton styleClass="btn-form" value="Add" rendered="#{musicController.hasInstagram()}"
 										actionListener="#{musicController.addLink}"
 										process="@this itInstagram" update="dtLinks" />
 								</div>
 
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Soundcloud" />
+									<p:outputLabel styleClass="input-details" value="Soundcloud" rendered="#{musicController.hasSoundcloud()}" />
 									<p:inputText id="itSoundcloud" type="text"
-										placeholder="Qual o link?"
+										placeholder="Qual o link?" rendered="#{musicController.hasSoundcloud()}"
 										value="#{musicController.soundcloud.url}" />
-									<p:commandButton styleClass="btn-form" value="Add"
-										actionListener="#{musicController.addLink}"
+									<p:commandButton styleClass="btn-form" value="Add" rendered="#{musicController.hasSoundcloud()}"
+										actionListener="#{musicController.addLink}" 
 										process="@this itSoundcloud" update="dtLinks" />
 								</div>
 
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Youtube" />
+									<p:outputLabel styleClass="input-details" value="Youtube" rendered="#{musicController.hasYoutube()}" />
 									<p:inputText id="itYoutube" type="text"
-										placeholder="Qual o link?"
+										placeholder="Qual o link?" rendered="#{musicController.hasYoutube()}"
 										value="#{musicController.youtube.url}" />
-									<p:commandButton styleClass="btn-form" value="Add"
+									<p:commandButton styleClass="btn-form" value="Add" rendered="#{musicController.hasYoutube()}"
 										actionListener="#{musicController.addLink}"
 										process="@this itYoutube" update="dtLinks" />
 								</div>
 
 								<div class="input-box">
-									<p:outputLabel styleClass="input-details" value="Spotify" />
+									<p:outputLabel styleClass="input-details" value="Spotify" rendered="#{musicController.hasSpotify()}" />
 									<p:inputText id="itSpotify" type="text"
-										placeholder="Qual o link?"
+										placeholder="Qual o link?" rendered="#{musicController.hasSpotify()}"
 										value="#{musicController.spotify.url}" />
-									<p:commandButton styleClass="btn-form" value="Add"
+									<p:commandButton styleClass="btn-form" value="Add" rendered="#{musicController.hasSpotify()}"
 										actionListener="#{musicController.addLink}"
 										process="@this itSpotify" update="dtLinks" />
 								</div>

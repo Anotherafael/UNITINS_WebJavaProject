@@ -37,6 +37,8 @@ public class MusicController extends Controller<Music> {
 
 	private InputStream fotoInputStream = null;
 	private String nomeFoto = null;
+	
+	private User loggedUser;
 
 	public MusicController() {
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -106,12 +108,23 @@ public class MusicController extends Controller<Music> {
 		this.spotify = spotify;
 	}
 
+	public User getLoggedUser() {
+		if (loggedUser == null) {
+			loggedUser = (User) Session.getInstance().getAttribute("loggedInUser");
+		}
+		return loggedUser;
+	}
+
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
+	}
+
 	public List<Music> getMusicList() {
 		if (musicList == null) {
 			musicList = new ArrayList<Music>();
 			MusicRepository repo = new MusicRepository();
 			try {
-				setMusicList(repo.findMusicByUser());
+				setMusicList(repo.findMusicsByLoggedUser());
 			} catch (RepositoryException e) {
 				e.printStackTrace();
 				Util.addErrorMessage("Error on trying to find musics.");
@@ -128,8 +141,7 @@ public class MusicController extends Controller<Music> {
 
 	@Override
 	public void save() {
-		User user = (User) Session.getInstance().getAttribute("loggedInUser");
-		entity.setUser(user);
+		getEntity().setUser(getLoggedUser());
 		if (fotoInputStream == null) {
 			super.save();
 			clean();
@@ -147,6 +159,10 @@ public class MusicController extends Controller<Music> {
 			}
 			repo.commitTransaction();
 			clean();
+			
+			Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+			flash.clear();
+			
 			Util.addInfoMessage("Music saved with thumb.");
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			Util.redirect("/lip/views/music/index.xhtml");
@@ -229,6 +245,55 @@ public class MusicController extends Controller<Music> {
 		getEntity().getListLinks().remove(link);
 	}
 
+	public boolean hasYoutube() {
+		if (getEntity().getListLinks() == null)
+			getEntity().setListLinks(new ArrayList<Link>());
+		List<Link> list = getEntity().getListLinks();
+		
+		for (Link link : list) {
+			if (link.getPlatform().equals(Platform.YOUTUBE)) {				
+				return false;
+			}
+		}
+		return true;
+	}
+	public boolean hasSpotify() {
+		if (getEntity().getListLinks() == null)
+			getEntity().setListLinks(new ArrayList<Link>());
+		List<Link> list = getEntity().getListLinks();
+		
+		for (Link link : list) {
+			if (link.getPlatform().equals(Platform.SPOTIFY)) {
+				return false;				
+			}
+		}
+		return true;
+	}
+	public boolean hasInstagram() {
+		if (getEntity().getListLinks() == null)
+			getEntity().setListLinks(new ArrayList<Link>());
+		List<Link> list = getEntity().getListLinks();
+		
+		for (Link link : list) {
+			if (link.getPlatform().equals(Platform.INSTAGRAM)) {				
+				return false;
+			}
+		}
+		return true;
+	}
+	public boolean hasSoundcloud() {
+		if (getEntity().getListLinks() == null)
+			getEntity().setListLinks(new ArrayList<Link>());
+		List<Link> list = getEntity().getListLinks();
+		
+		for (Link link : list) {
+			if (link.getPlatform().equals(Platform.SOUNDCLOUD)) {				
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	@Override
 	public Music getEntity() {
 		if (entity == null) {
@@ -242,6 +307,7 @@ public class MusicController extends Controller<Music> {
 	public void remove(Music entity) {
 		super.remove(entity);
 		Util.addWarnMessage("Music removed");;
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		Util.redirect("/lip/views/music/index.xhtml");
 	}
 

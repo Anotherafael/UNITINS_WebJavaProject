@@ -36,13 +36,29 @@ public class MusicRepository extends Repository<Music> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Music> findMusicByUser() throws RepositoryException {
+	public List<Music> findMusicsByLoggedUser() throws RepositoryException {
 		
 		User user = (User) Session.getInstance().getAttribute("loggedInUser");
 		
 		try {
 			EntityManager em = JPAUtil.getEntityManager();
 			Query query = em.createQuery("SELECT m FROM Music m WHERE m.user = :user ORDER BY m.id ");
+			query.setParameter("user",  user);
+			
+			return (List<Music>) query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RepositoryException("Database consult error");
+		}
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Music> findMusicsByUser(User user) throws RepositoryException {
+		
+		try {
+			EntityManager em = JPAUtil.getEntityManager();
+			Query query = em.createQuery("SELECT m FROM Music m WHERE m.user = :user ORDER BY m.id");
 			query.setParameter("user",  user);
 			
 			return (List<Music>) query.getResultList();

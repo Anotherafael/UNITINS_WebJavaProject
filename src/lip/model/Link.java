@@ -1,5 +1,6 @@
 package lip.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -19,7 +20,7 @@ public class Link extends DefaultEntity<Link>{
 	@Column(nullable = false)
 	private Platform platform;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Music music;
 	
 	public Link() {
@@ -83,6 +84,6 @@ public class Link extends DefaultEntity<Link>{
 	
 	@Override
 	public String toString() {
-		return "Link para " + getPlatform() + ": " + getUrl();
+		return getUrl();
 	}
 }

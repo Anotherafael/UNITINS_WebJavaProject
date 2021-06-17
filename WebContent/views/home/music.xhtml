@@ -7,27 +7,43 @@
 	template="/resources/template/home_template.xhtml">
 
 	<ui:define name="content">
+		<p:growl id="growl"></p:growl>
 		<main>
 			<h:form>
 				<div class="content">
-					<p:dataGrid value="#{musicIndexController.musicList}" var="obj"
-						columns="4" style="justify-content: space-between; align-items: center; text-align:center;">
-						<p:card
-							style="width: 22.5em; text-align:center; justify-content: center; align-items: center;">
-							<f:facet name="header">
-								<img src="/lip/views/img-music?id=#{obj.id}.png" />
-							</f:facet>
-							<f:facet name="title">
+					<div style="justify-content: center; align-items: center; display: flex;">
+						<div>
+							<p:autoComplete id="user" value="#{musicIndexController.selectedUser}" placeholder="Pesquisar por artista" forceSelection="true"
+							dropdown="true" minQueryLength="1" moreText="There are more artists" maxResults="5" var="obj" itemLabel="#{obj.nickname}" 
+							itemValue="#{obj}" completeMethod="#{musicIndexController.users}" scrollHeight="250" inputStyle="width: 250px"/>
+						</div>
+						<div style="padding-left: 20px;">
+							<p:commandButton value="Search" update="musics" action="#{musicIndexController.search}"></p:commandButton>
+						</div>
+					</div>
+					<div style="justify-content: center; align-items: center; display: flex;">
+						<p:dataGrid id="musics" value="#{musicIndexController.musicList}" var="obj" columns="3" style="text-align:center;" flex="true">
+							<p:card style="width: 20em; text-align:center; justify-content: center; align-items: center;">
+							
+								<f:facet name="header">
+									<img src="/lip/views/img-music?id=#{obj.id}.png" />
+								</f:facet>
+								
+								<f:facet name="title">
 					   			#{obj.title}
-							</f:facet>
-							<div class="links">
-								<i class="pi pi-cloud" style="font-size: 30px" /> 
-								<i class="pi pi-youtube" style="font-size: 30px" /> 
-								<i class="pi pi-question" style="font-size: 30px" />
-								<p:commandButton action="#{musicInfoController.musicInfo(obj)}" icon="pi pi-info"></p:commandButton>
-							</div>
-						</p:card>
-					</p:dataGrid>
+								</f:facet>
+								
+								<div class="links"> 
+									<p:commandButton action="#{obj.youtube()}" icon="pi pi-youtube" styleClass="ui-button-danger rounded-button" update="growl"></p:commandButton>
+									<p:commandButton action="#{obj.instagram()}" icon="ti-instagram" styleClass="ui-button-help rounded-button" update="growl"></p:commandButton>
+									<p:commandButton action="#{obj.soundcloud()}" icon="ti-soundcloud" styleClass="ui-button-warning rounded-button" update="growl"></p:commandButton>
+									<p:commandButton action="#{obj.spotify()}" icon="ti-rss-alt" styleClass="ui-button-success rounded-button" update="growl"></p:commandButton>
+									<p:commandButton action="#{musicInfoController.musicInfo(obj)}" icon="pi pi-info" styleClass="ui-button-info rounded-button" update="growl"></p:commandButton>
+								</div>
+								
+							</p:card>
+						</p:dataGrid>
+					</div>
 				</div>
 			</h:form>
 		</main>

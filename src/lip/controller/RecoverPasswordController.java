@@ -74,7 +74,7 @@ public class RecoverPasswordController extends Controller<RecoverPassword> {
 			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 			return;
 		}
-
+		
 		double firstValue = Math.random() * 100;
 		double secondValue = Math.random() * 100;
 

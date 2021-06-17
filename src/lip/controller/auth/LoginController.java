@@ -50,7 +50,7 @@ public class LoginController implements Serializable {
 		User user = (User) Session.getInstance().getAttribute("loggedInUser");
 		Util.addWarnMessage("Bye, " + user.getNickname() + "!");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-		Session.getInstance().setAttribute("loggedInUser", null);
+		Session.getInstance().invalidateSession();
 		
 		Util.redirect("/lip/views/auth/login.xhtml");
 	}

@@ -1,6 +1,5 @@
 package lip.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -14,12 +13,12 @@ public class Post extends DefaultEntity<Post>{
 
 	@Column(nullable = false, length = 50)
 	private String title;
-	@Column(nullable = false, length = 500)
+	@Column(nullable = false, length = 1000)
 	private String content;
 	@Column(nullable = false)
 	private PostType postType;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	private User user;
 	
 	public Post() {

@@ -22,7 +22,7 @@ import com.sun.faces.component.visit.FullVisitContext;
 public class Util {
 
 	public static final String PATH_IMAGES = File.separator + "Pictures";
-	// /images/usuario
+	
 	public static final String PATH_IMAGES_USUARIO = PATH_IMAGES + File.separator + "LIP";
 
 	public static void addErrorMessage(String msg) {

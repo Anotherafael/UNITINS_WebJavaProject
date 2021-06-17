@@ -51,7 +51,7 @@ public class SecurityFilter implements Filter {
 		HttpServletRequest servletRequest = (HttpServletRequest) request;
 
 		String url = servletRequest.getRequestURI();
-		System.out.println(url);
+		
 		// ||
 		if (url.equals("/lip/views/auth/login.xhtml") || url.equals("/lip/views/home/index.xhtml")
 				|| url.equals("/lip/views/home/music.xhtml") || url.equals("/lip/views/home/music_info.xhtml")
@@ -71,8 +71,6 @@ public class SecurityFilter implements Filter {
 		if (user == null) {
 			((HttpServletResponse) response).sendRedirect("/lip/views/home/index.xhtml");
 		} else {
-			if (url.equals("/lip/views/auth/login.xhtml"))
-				((HttpServletResponse) response).sendRedirect("/lip/views/user/index.xhtml");
 			if (getPagesWithPermissions().contains(url)) {
 				chain.doFilter(request, response);
 				return;

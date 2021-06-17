@@ -34,18 +34,25 @@ public class UserRepository extends Repository<User> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<User> findByName(String search) throws RepositoryException {
+	public List<User> findByName(String nickname, Integer maxResults) throws RepositoryException {
+		EntityManager em = getEntityManager();
+		StringBuffer jpql = new StringBuffer();
 		
-		try {
-			EntityManager em = JPAUtil.getEntityManager();
-			Query query = em.createQuery("SELECT u FROM User u ORDER BY u.id LIKE search");
-			
-			return query.getResultList();
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RepositoryException("Database consult error");
-		}
+		jpql.append(" SELECT ");
+		jpql.append(" u ");
+		jpql.append(" FROM ");
+		jpql.append(" User u ");
+		jpql.append(" WHERE ");
+		jpql.append(" UPPER(u.nickname) LIKE UPPER(:nickname) ");
+		jpql.append(" ORDER BY u.nickname ");
 		
+		Query query = em.createQuery(jpql.toString());
+		query.setParameter("nickname", "%" + nickname + "%");
+		
+		if (maxResults != null)
+			 query.setMaxResults(maxResults);
+		
+		return (List<User>) query.getResultList();
 	}
 	
 	public User findByEmail(String email) throws RepositoryException {

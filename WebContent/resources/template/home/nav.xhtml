@@ -7,23 +7,18 @@
 
 	<ui:insert name="nav">
 		<header>
+			<h:form>
 			<div class="menu-items">
 				<ul>
-					<li><a href="../../../lip/views/home/index.xhtml">Home</a></li>
-					<li><a href="../../../lip/views/home/music.xhtml">Músicas</a></li>
-					<li><a href="../../../lip/views/auth/login.xhtml">Login</a></li>
+					<li><p:link href="../../../lip/views/home/index.xhtml" value="Home"/></li>
+					<li>|</li>
+					<li><p:link href="../../../lip/views/home/music.xhtml" value="Músicas"/></li>
+					<li>|</li>
+					<li><p:link href="../../../lip/views/auth/login.xhtml" value="Login" rendered="#{postIndexController.loggedUser == null}"/></li>
+					<li><p:link href="../../../lip/views/music/index.xhtml" value="Dashboard" rendered="#{postIndexController.loggedUser != null}"/></li>
 				</ul>
 			</div>
-
-			<!-- 
-		<div class="social-medias">
-			<span class="ti-facebook"></span> 
-			<span class="ti-instagram"></span>
-			<span class="ti-soundcloud"></span> 
-			<span class="ti-youtube"></span> 
-			<span class="ti-themify-favicon-alt"></span>
-		</div>
-		 -->
+			</h:form>
 		</header>
 	</ui:insert>
 </ui:composition>

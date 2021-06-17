@@ -40,7 +40,8 @@
 								value="Content" />
 						</div>
 						<div>
-							<p:inputTextarea id="content" style="width: 49%;" placeholder="Qual o conteúdo?" rows="10" counter="display" maxlength="500" counterTemplate="{0} characters remaining." value="#{postController.entity.content}" required="true"/>
+							<p:inputTextarea id="content" style="width: 49%;" placeholder="Qual o conteúdo?" rows="10" counter="display" maxlength="1000" 
+							counterTemplate="{0} characters remaining." value="#{postController.entity.content}" required="true"/>
 						</div>
 						<div>
 	        				<h:outputText id="display" class="p-d-block" />

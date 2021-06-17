@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "\"emails\"")
 public class Email extends Contact {
 
-	@Column(unique=true, nullable = false)
+	@Column(nullable = false)
 	private String address;
 	
 	public String getAddress() {

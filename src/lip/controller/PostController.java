@@ -35,7 +35,7 @@ public class PostController extends Controller<Post> {
 			postList = new ArrayList<Post>();
 			PostRepository repo = new PostRepository();
 			try {
-				setPostList(repo.findPostByUser());
+				setPostList(repo.findPostsByLoggedUser());
 			} catch (RepositoryException e) {
 				e.printStackTrace();
 				Util.addErrorMessage("Error on trying to find posts.");
@@ -67,7 +67,7 @@ public class PostController extends Controller<Post> {
 	public void save() {
 		User user = (User) Session.getInstance().getAttribute("loggedInUser");
 		System.out.println(user);
-		entity.setUser(user);
+		getEntity().setUser(user);
 		super.save();
 		Util.addInfoMessage("Post saved");
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);

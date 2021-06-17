@@ -8,22 +8,37 @@
 	template="/resources/template/home_template.xhtml">
 
 	<ui:define name="content">
+	<p:growl id="growl"></p:growl>
 		<main>
 			<div class="content">
-				
-				<div class="left-card">
+				<div style="display: flex;">
+				<div class="left-card" >
 					<div>
-						#{musicInfoController.entity.title}
-					</div>
-					<div>
-						<img src="/lip/views/img-music?id=#{musicInfoController.entity.id}.png" />
+						<p:card styleClass="card-music">
+							<f:facet name="header">
+								<img src="/lip/views/img-music?id=#{musicInfoController.entity.id}.png" />
+							</f:facet>
+							<f:facet name="title">
+					   			#{musicInfoController.entity.title}
+							</f:facet>
+							<div class="links">
+								<p:commandButton action="#{musicInfoController.entity.youtube()}" icon="pi pi-youtube" update="growl" styleClass="ui-button-danger rounded-button"></p:commandButton>
+								<p:commandButton action="#{musicInfoController.entity.instagram()}" icon="ti-instagram" update="growl" styleClass="ui-button-help rounded-button"></p:commandButton>
+								<p:commandButton action="#{musicInfoController.entity.soundcloud()}" icon="ti-soundcloud" update="growl" styleClass="ui-button-warning rounded-button"></p:commandButton>
+								<p:commandButton action="#{musicInfoController.entity.spotify()}" icon="ti-rss-alt" update="growl" styleClass="ui-button-success rounded-button"></p:commandButton>
+							</div>
+						</p:card>
 					</div>
 				</div>
 				
 				<div class="right-card">
-					#{musicInfoController.entity.lyrics}
+					<div class="text">
+						<p:inputTextarea id="lyrics" rows="25"
+						 value="#{musicInfoController.entity.lyrics}" disabled="true"/>
+					</div>
 				</div>
 				
+				</div>
 			</div>
 		</main>
 	</ui:define>
